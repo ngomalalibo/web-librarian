@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>WebLibrarian Authors</title>
+</head>
+<body>
+<h1>Spring is working right here</h1>
+<table>
+    <tr>
+        <th>Author Name</th>
+        <th>Author Wiki</th>
+        <th>Author Bio</th>
+    </tr>
+    <tr th:each="author: ${authors}">
+        <td th:text="${author.person.fullName}">Richard Burton</td>
+        <td th:text="${author.wikiLink}">Richard Burton</td>
+        <td th:text="${author.biography}">Richard Burton</td>
+    </tr>
+
+    <!--<tr>
+        <th>Chuck Norris Quote</th>
+    </tr>
+    <td th:text="${joke}">Richard Burton</td>-->
+</table>
+</body>
+</html>

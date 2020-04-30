@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -jar target/web-librarian-project-2.0-SNAPSHOT.war --server.port=$PORT
