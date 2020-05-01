@@ -24,9 +24,9 @@ import javax.servlet.ServletRegistration;
  * The entry point of the Spring Boot application.
  */
 @Slf4j
-@PropertySources({@PropertySource("classpath:application_env.properties"),
-        @PropertySource("classpath:application.properties")}
-)
+// @PropertySources({@PropertySource("classpath:application_env.properties"),
+//         @PropertySource("classpath:application.properties")}
+// )
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)/*(exclude = {org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class})*/
 // TODO > Option 2: To disable spring security (Doesn not disable security)
 public class Application extends SpringBootServletInitializer implements WebMvcConfigurer, WebApplicationInitializer

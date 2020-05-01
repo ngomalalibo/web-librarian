@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
@@ -35,7 +36,7 @@ public class LoadProperties
     {
         properties = new Properties();
         logger.info("---- loading properties from application.properties file");
-        properties.load(ClassLoader.getSystemResourceAsStream("application.properties"));
+        properties.load(ClassLoader.getSystemResourceAsStream("application_env.properties"));
         logger.info("---- properties loaded successfully");
     }
     
@@ -49,5 +50,27 @@ public class LoadProperties
         byte[] array = new byte[size];
         new Random().nextBytes(array);
         return new String(array, Charset.forName("UTF-8"));
+    }
+    
+    public static void main(String[] args)
+    {
+        try
+        {
+            LoadProperties.init();
+            properties.keySet().forEach(System.out::println);
+            System.out.println("url " + LoadProperties.getProperty("spring.data.mongodb.uri"));
+            // Map<String, String> map = System.getenv();
+            // for (Map.Entry<String, String> entry : map.entrySet())
+            // {
+            //     if(entry.getKey().equals(""))
+            //     System.out.println("Variable Name:- " + entry.getKey() + " Value:- " + entry.getValue());
+            // }
+            // System.out.println("uri "+System.getenv("SPRING_DATA_MONGODB_URI"));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
     }
 }

@@ -8,6 +8,7 @@ import com.pc.weblibrarian.codecs.AddressTypeCodec;
 import com.pc.weblibrarian.entity.*;
 import com.pc.weblibrarian.enums.IDPrefixes;
 import com.pc.weblibrarian.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistries;
@@ -23,6 +24,7 @@ import javax.servlet.ServletContextListener;
 import java.util.HashMap;
 import java.util.HashSet;
 
+@Slf4j
 @Repository
 public class Connection<T extends PersistingBaseEntity> implements ServletContextListener
 {
@@ -63,10 +65,10 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     public static final String DOCUMENT = "mongoDocument";
     
     // @Value("${spring.data.mongodb.uri}")
-    // public static String DBSTR = System.getenv("SPRING_DATA_MONGODB_URI_LOCAL");
-    public static String DBSTR = System.getenv("SPRING_DATA_MONGODB_URI");
+    public static String DBSTR = "mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian";
+    // public static String DBSTR = System.getenv("SPRING_DATA_MONGODB_URI");
 //    static final String DBSTR = "mongodb://localhost:27017?retryWrites=true&maxPoolSize=50&connectTimeoutMS=2000&w=1&wtimeoutMS=2500";
-//    static final String DBSTR = "mongodb://localhost:27017";
+//     static final String DBSTR = "mongodb://localhost:27017";
     
     public static final int LIMIT = 20;
     public static final int SKIP = 0;
@@ -118,6 +120,7 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     public static MongoDatabase startDB()
     {
         logger.warn("---------------------------- Starting Database");
+        log.info("Database url -> " + DBSTR);
         ConnectionString connectionString = new ConnectionString(DBSTR);
         
         

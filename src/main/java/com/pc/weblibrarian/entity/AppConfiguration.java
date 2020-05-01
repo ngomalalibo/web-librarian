@@ -81,13 +81,42 @@ public class AppConfiguration extends PersistingBaseEntity
                 '}';
     }
     
-    public void getDefaultsFromEnvVariables()
+    public void getDefaultsFromEnvironment()
     {
         
-        try
-        {
-            super.prepersist(this);
-            this.setDomain(LoadProperties.getProperty("WEBLIBRARIAN_DOMAIN"));
+        
+        super.prepersist(this);
+        this.setDatabaseURI(System.getenv("SPRING_DATA_MONGODB_URI"));
+        this.setDatabaseURL(System.getenv("SPRING_DATA_MONGODB_URI_LOCAL"));
+        //
+        // this.setDomain(System.getenv("WEBLIBRARIAN_DOMAIN"));
+        // this.setOrganizationName(System.getenv("WEBLIBRARIAN_ORGANIZATIONNAME"));
+        // this.setAdminEmail(System.getenv("WEBLIBRARIAN_ADMINEMAIL"));
+        // this.setDateTimeFormat(System.getenv("WEBLIBRARIAN_DATETIMEFORMAT"));
+        // this.setRequireUserAddress(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_REQUIREUSERADDRESS")));
+        // this.setMinimumPasswordLength(Integer.parseInt(System.getenv("WEBLIBRARIAN_MINIMUMPASSWORDLENGTH")));
+        // this.setMaximumPasswordAttempts(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXIMUMPASSWORDATTEMPTS")));
+        // this.setCopyOrganizationAdminOnAllEmails(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_COPYORGANIZATIONADMINONALLEMAILS")));
+        // this.setAllowAdminDeleteCheckOut(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_ALLOWADMINDELETECHECKOUT")));
+        // this.setNotifyAdminAtReminder(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_NOTIFYADMINATREMINDER")));
+        // this.setNotifyUserAtCheckout(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_NOTIFYUSERATCHECKOUT")));
+        // this.setEmailValidatedBeforeCheckoutAllowed(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_EMAILVALIDATEBEFORECHECKOUTALLOWED")));
+        // this.setMaxDaysToEditCheckOut(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXDAYSTOEDITCHECKOUT")));
+        // this.setMaxCheckoutItemsPerUser(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXCHECKOUTITEMSPERUSER")));
+        // this.setMaxCheckoutDays(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXCHECKOUTDAYS")));
+        // this.setMaxCheckoutExtendedDays(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXCHECKOUTEXTENDEDDAYS")));
+        // this.setCheckoutReminderDays(Integer.parseInt(System.getenv("WEBLIBRARIAN_CHECKOUTREMINDERDAYS")));
+        //
+        // this.setContentRating(System.getenv("WEBLIBRARIAN_CONTENTRATING"));
+        // this.setCurrencyTypeAndSymbol(System.getenv("WEBLIBRARIAN_CURRENCYTYPEANDSYMBOL"));
+        // this.setDatabaseName(System.getenv("SPRING_DATA_MONGODB_DATABASE"));
+        // this.setDatabaseURI(System.getenv("SPRING_DATA_MONGODB_URI"));
+        // this.setDatabaseURL(System.getenv("DATABASE_URL"));
+        // this.setDatabasePort(Integer.parseInt(System.getenv("SPRING_DATA_MONGODB_PORT")));
+        // this.setCountryCode(System.getenv("WEBLIBRARIAN_COUNTRYCODE"));
+        // this.setGoogleUsername(System.getenv("GOOGLE_MAIL_USERNAME"));
+        // this.setGooglePassword(System.getenv("GOOGLE_MAIL_PASSWORD"));
+            /*this.setDomain(LoadProperties.getProperty("WEBLIBRARIAN_DOMAIN"));
             this.setOrganizationName(LoadProperties.getProperty("WEBLIBRARIAN_ORGANIZATIONNAME"));
             this.setAdminEmail(LoadProperties.getProperty("WEBLIBRARIAN_ADMINEMAIL"));
             this.setDateTimeFormat(LoadProperties.getProperty("WEBLIBRARIAN_DATETIMEFORMAT"));
@@ -113,41 +142,16 @@ public class AppConfiguration extends PersistingBaseEntity
             this.setDatabasePort(Integer.parseInt(LoadProperties.getProperty("SPRING_DATA_MONGODB_PORT")));
             this.setCountryCode(LoadProperties.getProperty("WEBLIBRARIAN_COUNTRYCODE"));
             this.setGoogleUsername(LoadProperties.getProperty("GOOGLE_MAIL_USERNAME"));
-            this.setGooglePassword(LoadProperties.getProperty("GOOGLE_MAIL_PASSWORD"));
-        }
-        catch (IOException io)
-        {
-            log.info("Property not found in properties file.. Loading properties from Environment variables");
-            
-            this.setDomain(System.getenv("WEBLIBRARIAN_DOMAIN"));
-            this.setOrganizationName(System.getenv("WEBLIBRARIAN_ORGANIZATIONNAME"));
-            this.setAdminEmail(System.getenv("WEBLIBRARIAN_ADMINEMAIL"));
-            this.setDateTimeFormat(System.getenv("WEBLIBRARIAN_DATETIMEFORMAT"));
-            this.setRequireUserAddress(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_REQUIREUSERADDRESS")));
-            this.setMinimumPasswordLength(Integer.parseInt(System.getenv("WEBLIBRARIAN_MINIMUMPASSWORDLENGTH")));
-            this.setMaximumPasswordAttempts(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXIMUMPASSWORDATTEMPTS")));
-            this.setCopyOrganizationAdminOnAllEmails(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_COPYORGANIZATIONADMINONALLEMAILS")));
-            this.setAllowAdminDeleteCheckOut(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_ALLOWADMINDELETECHECKOUT")));
-            this.setNotifyAdminAtReminder(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_NOTIFYADMINATREMINDER")));
-            this.setNotifyUserAtCheckout(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_NOTIFYUSERATCHECKOUT")));
-            this.setEmailValidatedBeforeCheckoutAllowed(Boolean.parseBoolean(System.getenv("WEBLIBRARIAN_EMAILVALIDATEBEFORECHECKOUTALLOWED")));
-            this.setMaxDaysToEditCheckOut(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXDAYSTOEDITCHECKOUT")));
-            this.setMaxCheckoutItemsPerUser(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXCHECKOUTITEMSPERUSER")));
-            this.setMaxCheckoutDays(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXCHECKOUTDAYS")));
-            this.setMaxCheckoutExtendedDays(Integer.parseInt(System.getenv("WEBLIBRARIAN_MAXCHECKOUTEXTENDEDDAYS")));
-            this.setCheckoutReminderDays(Integer.parseInt(System.getenv("WEBLIBRARIAN_CHECKOUTREMINDERDAYS")));
-            
-            this.setContentRating(System.getenv("WEBLIBRARIAN_CONTENTRATING"));
-            this.setCurrencyTypeAndSymbol(System.getenv("WEBLIBRARIAN_CURRENCYTYPEANDSYMBOL"));
-            this.setDatabaseName(System.getenv("SPRING_DATA_MONGODB_DATABASE"));
-            this.setDatabaseURI(System.getenv("SPRING_DATA_MONGODB_URI"));
-            this.setDatabaseURL(System.getenv("DATABASE_URL"));
-            this.setDatabasePort(Integer.parseInt(System.getenv("SPRING_DATA_MONGODB_PORT")));
-            this.setCountryCode(System.getenv("WEBLIBRARIAN_COUNTRYCODE"));
-            this.setGoogleUsername(System.getenv("GOOGLE_MAIL_USERNAME"));
-            this.setGooglePassword(System.getenv("GOOGLE_MAIL_PASSWORD"));
-            io.getMessage();
-        }
+            this.setGooglePassword(LoadProperties.getProperty("GOOGLE_MAIL_PASSWORD"));*/
+        
+    }
+    
+    public static void main(String[] args)
+    {
+        AppConfiguration app = new AppConfiguration();
+        app.getDefaultsFromEnvironment();
+        System.out.println("URI "+app.getDatabaseURI());
+        System.out.println("URL "+app.getDatabaseURL());
     }
     
 }
