@@ -89,6 +89,19 @@ public class AuthorDataService
         return getAuthorsQuery(sort, asc).asList(opt);*/
     }
     
+    public List<Author> getAllAuthors()
+    {
+        List<Author> allAuthors = new ArrayList<>();
+        Optional.of(Connection.authors.find()).ifPresent(s -> s.iterator().forEachRemaining(allAuthors::add));
+        
+        return allAuthors;
+       /* logger.info(String.format("getAuthors (%d %d %s %b)\n", offset, limit, sort, asc));
+        FindOptions opt = new FindOptions();
+        opt.skip(offset);
+        opt.limit(limit);
+        return getAuthorsQuery(sort, asc).asList(opt);*/
+    }
+    
     public static void main(String[] args)
     {
         //Populate (Initialize with data) Java Object, POJO, automatically

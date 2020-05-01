@@ -104,8 +104,6 @@ public class GenericDataService
         {
             throw new CustomNullPointerException("Collection is empty");
         }
-        
-        
     }
     
     public <B extends PersistingBaseEntity> List<B> getRecordsByEntityKey(String key, String value, List<SortProperties> sortOrder)

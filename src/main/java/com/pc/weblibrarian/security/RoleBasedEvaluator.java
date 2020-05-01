@@ -24,7 +24,7 @@ public class RoleBasedEvaluator implements AccessEvaluator<SecuredByRole>
             {
                 if (SecurityUtils.isUserLoggedIn())
                 {
-                    log.info("Forbidden -> Access Control");
+                    log.info("RoleBasedEvaluator Forbidden -> Access Control");
                     return Access.restricted(new AccessDeniedException("RolebasedEvaluator Forbidden -> Access Control"), "RolebasedEvaluator Forbidden -> Access Control");
                     //throw new AccessDeniedException("Web Librarian - Forbidden -> Access Control");
                     // event.rerouteToError(AccessDeniedException.class);

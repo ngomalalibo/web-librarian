@@ -49,7 +49,7 @@ public class SendMail
         ActionableEmail mailObject = new ActionableEmail();
         mailObject.setSubject("Web Librarian - Confirm Email Address");
         mailObject.setToAddresses("ngomalalibo@yahoo.com");
-        mailObject.setFromAddresses(username != null ? username : "ngomalalibo@gmail.com");
+        mailObject.setFromAddresses(username != null ? username : "weblibrarianapp@gmail.com");
         mailObject.setLine1(
                 "You have been added as a user on Weblibrarian. Please confirm your email address by clicking the link below.");
         mailObject.setLine2(
@@ -76,7 +76,7 @@ public class SendMail
             
             protected PasswordAuthentication getPasswordAuthentication()
             {
-                return new PasswordAuthentication(username != null ? username : "ngomalalibo@gmail.com", password != null ? password : "exMart1n");
+                return new PasswordAuthentication(username != null ? username : "weblibrarianapp@gmail.com", password != null ? password : "Web1234567890");
             }
             
         });
@@ -88,8 +88,8 @@ public class SendMail
         {
             MimeMessage message = new MimeMessage(session);
             
-            message.setFrom(new InternetAddress(username != null ? username : "ngomalalibo@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", List.of(username != null ? username : "ngomalalibo@gmail.com", actionableEmail.getToAddresses()))));
+            message.setFrom(new InternetAddress(username != null ? username : "weblibrarianapp@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", List.of(username != null ? username : "weblibrarianapp@gmail.com", actionableEmail.getToAddresses()))));
             message.setSubject(actionableEmail.getSubject());
             message.setSentDate(new Date());
             message.setContent(actionableEmail.getMessage(), "text/html");

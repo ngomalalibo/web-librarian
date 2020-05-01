@@ -31,6 +31,7 @@ import elemental.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
@@ -202,7 +203,7 @@ public class PasswordResetPage extends Div implements HasUrlParameter<String>
             }
             passrec.setUserEmail(userEmail);
             passrec.setToken(token);
-            passrec.setCreatedBy("SYSTEM");
+            passrec.setCreatedBy(user.getUserEmail());
             passrec.save(passrec);
             
             // send user email
@@ -285,6 +286,7 @@ public class PasswordResetPage extends Div implements HasUrlParameter<String>
         log.info("expireUserVerfication -> " + userEmail);
         UserVerification recovery = (UserVerification) gdsUserV.getRecordByEntityProperty("userEmail", userEmail);
         recovery.setExpired(true);
+        recovery.setEmailAddressVerifiedDate(LocalDateTime.now());
         recovery.replaceEntity(recovery, recovery);
     }
     

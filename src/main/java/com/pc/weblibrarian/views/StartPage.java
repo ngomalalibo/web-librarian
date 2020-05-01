@@ -1,20 +1,22 @@
 package com.pc.weblibrarian.views;
 
+import com.pc.weblibrarian.security.SecuredByRole;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.ListItem;
 import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
-import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 // import com.vaadin.flow.spring.annotation.SpringComponent;
 
 // @Component
 @UIScope
+@SecuredByRole(value = {"USER"})
+@PreserveOnRefresh
 @Route(value = "start", layout = MainFrame.class)
-// @ParentLayout(MainFrame.class)
 public class StartPage extends VerticalLayout implements BeforeEnterObserver
 {
     
@@ -29,7 +31,7 @@ public class StartPage extends VerticalLayout implements BeforeEnterObserver
         add(vl);
         add(new H3("With Weblibrarian you can do the following: "));
         
-        UnorderedList featuresUL = new UnorderedList(new ListItem("Manage Library Publications adn Media"));
+        UnorderedList featuresUL = new UnorderedList(new ListItem("Manage Library Publications and Media"));
         featuresUL.add(new ListItem("Manage Library Transactions"));
         featuresUL.add(new ListItem("Manage Library Users"));
         featuresUL.add(new ListItem("Manage Library Resources"));

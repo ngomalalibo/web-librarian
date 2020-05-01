@@ -52,7 +52,6 @@ import java.util.stream.Collectors;
 public class NewUserPage extends VerticalLayout implements PageConfigurator, BeforeEnterObserver
 {
     final Binder<LibraryUser> binder = new Binder<>(LibraryUser.class, true);
-    //private final AppConfiguration appConfiguration = DataInitialization.loadDefaults();
     
     private static final String SERVER = "localhost:8080/";
     
@@ -68,7 +67,7 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
     {
         super();
         setSizeFull();
-        addClassName("login-page");
+        addClassNames("login-page", "text-white");
         // getElement().setProperty("color", "white !important");
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
@@ -76,12 +75,13 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
         VerticalLayout componentVL = new VerticalLayout();
         componentVL.setJustifyContentMode(JustifyContentMode.CENTER);
         componentVL.setAlignItems(Alignment.CENTER);
+        componentVL.addClassName("text-white");
         
         setSizeFull();
         
         Div containerDiv = new Div();
         containerDiv.add(new H1("Library Management"));
-        containerDiv.getElement().setProperty("color", "white !important");
+        containerDiv.getElement().setProperty("color", "white");
         // containerDiv.addClassNames("text-white");
         add(containerDiv);
         
@@ -114,10 +114,15 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
                                                });
         
         SmallButton registerButton = new SmallButton("Register").theme("primary");
+        registerButton.addClassName("align-self-stretch");
+        
         registerButton.addClickListener(clk ->
                                         {
-                                            register();
-                                            binder.setBean(new LibraryUser());
+                                            if (!register())
+                                            {
+                                                binder.setBean(new LibraryUser());
+                                            }
+            
                                         });
         
         FlexMe buttonbar = new FlexMe(registerButton);
@@ -153,7 +158,7 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
     
     private LibraryUser bean = new LibraryUser();
     
-    private void register()
+    private boolean register()
     {
         BinderValidationStatus<LibraryUser> val = binder.validate();
         if (val.isOk())
@@ -162,7 +167,7 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
             {
                 binder.writeBean(bean);
                 
-                System.out.println("Fullname = " + bean.getPerson().getFullName());
+                System.out.println("Fullname = " + bean.getFirstName() + " " + bean.getLastName());
                 
                 bean.setAccessToConsumable(true);
                 bean.setAccessToRentable(true);
@@ -171,6 +176,7 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
                 bean.setIsAdmin(false);
                 bean.setLoginAttempts(0);
                 bean.setMaximumCheckoutItems(config.getMaxCheckoutItemsPerUser());
+                bean.setCreatedBy(bean.getUserEmail());
                 // bean.setPersonRoleTypes(Collections.singleton(PersonRoleType.ROLE_USER));
                 bean.setPersonRoleTypes(PersonRoleType.ROLE_USER);
                 bean.setHashedPassword(bcryptPassEncoder.encode(bean.getPassword()));
@@ -185,6 +191,7 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
                 {
                     feedback.addClassName("text-success");
                     feedback.setText("Thank you for registering... Please check your email for confirmation and account activation");
+                    return true;
                 }
                 else
                 {
@@ -212,6 +219,7 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
                              .collect(Collectors.joining(", "));
             feedback.setText(text);
         }
+        return false;
     }
     
     @Override
@@ -254,7 +262,7 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
             passrec.setUserEmail(user.getUserEmail());
             passrec.setVerificationType("email");
             passrec.setToken(token);
-            passrec.setCreatedBy("SYSTEM");
+            passrec.setCreatedBy(user.getUserEmail());
             passrec.save(passrec);
             
             // send user email
@@ -307,7 +315,7 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
             passrec.setUserEmail(userEmail);
             passrec.setVerificationType("password");
             passrec.setToken(token);
-            passrec.setCreatedBy("SYSTEM");
+            passrec.setCreatedBy(user.getUserEmail());
             passrec.save(passrec);
             
             // send user email
@@ -352,11 +360,5 @@ public class NewUserPage extends VerticalLayout implements PageConfigurator, Bef
             // beforeEnterEvent.rerouteTo(StartPage.class);
             beforeEnterEvent.forwardTo(StartPage.class);
         }
-        /*
-        if (VaadinSession.getCurrent().getAttribute("username") != null || MainFrame.getLoggedInUser() != null)
-        {
-            // beforeEnterEvent.rerouteTo(StartPage.class);
-            beforeEnterEvent.forwardTo(StartPage.class);
-        }*/
     }
 }
