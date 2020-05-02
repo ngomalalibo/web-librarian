@@ -3,7 +3,6 @@ package com.pc.weblibrarian.utils;
 import java.io.File;
 import java.net.URL;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -25,24 +24,26 @@ public class GetEntityNamesFromPackage
         }
         File scannedDir = new File(scannedUrl.getFile());
         Set<String> classes = new HashSet<String>();
-        for (File file : Objects.requireNonNull(scannedDir.listFiles()))
+        System.out.println("Dir content -> " + scannedDir.listFiles());
+        if (scannedDir.listFiles() != null)
         {
-            String name = file.getName();
-            if (name.endsWith(CLASS_FILE_SUFFIX))
+            for (File file : scannedDir.listFiles())
             {
-                int endIndex = name.length() - CLASS_FILE_SUFFIX.length();
-                name = name.substring(0, endIndex);
+                String name = file.getName();
+                if (name.endsWith(CLASS_FILE_SUFFIX))
+                {
+                    int endIndex = name.length() - CLASS_FILE_SUFFIX.length();
+                    name = name.substring(0, endIndex);
+                    classes.add(name);
+                }
                 classes.add(name);
+                //classes.addAll(findInDirectory(file, scannedPackage));
             }
-            classes.add(name);
-            //classes.addAll(findInDirectory(file, scannedPackage));
+            Stream<String> sorted = classes.stream().sorted();
+            //System.out.println(d);
+            sorted.forEach(classes::add);
         }
-        Stream<String> sorted = classes.stream().sorted();
-        sorted.forEach(d ->
-                       {
-                           //System.out.println(d);
-                           classes.add(d);
-                       });
+        
         return classes;
     }
     

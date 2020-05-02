@@ -65,10 +65,10 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     public static final String DOCUMENT = "mongoDocument";
     
     // @Value("${spring.data.mongodb.uri}")
-    public static String DBSTR = "mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian";
+    // public static String DBSTR = "mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian";
     // public static String DBSTR = System.getenv("SPRING_DATA_MONGODB_URI");
 //    static final String DBSTR = "mongodb://localhost:27017?retryWrites=true&maxPoolSize=50&connectTimeoutMS=2000&w=1&wtimeoutMS=2500";
-//     static final String DBSTR = "mongodb://localhost:27017";
+    static final String DBSTR = "mongodb://localhost:27017";
     
     public static final int LIMIT = 20;
     public static final int SKIP = 0;
