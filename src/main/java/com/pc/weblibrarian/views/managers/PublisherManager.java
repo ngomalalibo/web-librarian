@@ -26,12 +26,13 @@ import com.vaadin.flow.data.provider.ConfigurableFilterDataProvider;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 @SecuredByRole(value = {"USER", "ADMIN"})
 @Route(value = "publisher", layout = MainFrame.class)
-@PreserveOnRefresh
+// @PreserveOnRefresh
+@UIScope
 public class PublisherManager extends Fragment
 {
     private static final boolean superadmin = true;

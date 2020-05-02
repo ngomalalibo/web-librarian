@@ -39,7 +39,7 @@ import java.util.concurrent.Executors;
 @JsModule("./styles/modernizr-2.8.3-respond-1.4.2.min.js")*/
 @UIScope
 @org.springframework.stereotype.Component
-@Push
+@PreserveOnRefresh
 @Slf4j
 @JsModule("./styles/shared-styles.js") // . referenceces the webapp directory in main directory
 @CssImport("./styles/css/all.css")

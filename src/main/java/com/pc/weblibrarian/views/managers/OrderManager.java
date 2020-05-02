@@ -25,10 +25,12 @@ import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 @SecuredByRole(value = {"USER"})
 @Route(value = "orders", layout = MainFrame.class)
-@PreserveOnRefresh
+@UIScope
+// @PreserveOnRefresh
 public class OrderManager extends Fragment
 {
     private OrderItem orderItemClone;

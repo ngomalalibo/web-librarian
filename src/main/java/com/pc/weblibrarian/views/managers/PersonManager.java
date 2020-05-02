@@ -36,6 +36,7 @@ import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 import java.time.Year;
 import java.util.Comparator;
@@ -44,8 +45,9 @@ import java.util.stream.Collectors;
 
 @SecuredByRole(value = {"USER", "ADMIN"})
 @Route(value = "persons", layout = MainFrame.class)
+@UIScope
 //@ParentLayout(MainFrame.class)
-@PreserveOnRefresh
+// @PreserveOnRefresh
 public class PersonManager extends Fragment
 {
     private PersonDP dp = new PersonDP();

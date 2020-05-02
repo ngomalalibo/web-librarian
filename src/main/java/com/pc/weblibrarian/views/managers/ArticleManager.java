@@ -35,10 +35,12 @@ import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 @SecuredByRole(value = {"USER"})
 @Route(value = "articles", layout = MainFrame.class)
-@PreserveOnRefresh
+// @PreserveOnRefresh
+@UIScope
 public class ArticleManager extends Fragment
 {
     private ArticleDP dp = new ArticleDP();

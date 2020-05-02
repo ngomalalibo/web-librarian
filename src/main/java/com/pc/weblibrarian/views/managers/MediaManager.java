@@ -29,10 +29,12 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 @SecuredByRole(value = {"USER"})
 @Route(value = "mediaItem", layout = MainFrame.class)
-@PreserveOnRefresh
+@UIScope
+// @PreserveOnRefresh
 public class MediaManager extends Fragment
 {
     private static final boolean superadmin = true;

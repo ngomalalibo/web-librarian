@@ -31,6 +31,7 @@ import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 import java.time.Year;
 import java.util.Comparator;
@@ -40,7 +41,8 @@ import java.util.Comparator;
 // @PreAuthorize(value = "hasAnyRole('USER','ADMIN', 'SUPER_ADMIN')")
 @SecuredByRole(value = {"USER", "ADMIN"})
 @Route(value = "authors", layout = MainFrame.class)
-@PreserveOnRefresh
+@UIScope
+// @PreserveOnRefresh
 public class AuthorManager extends Fragment
 {
     private static final boolean superadmin = true;

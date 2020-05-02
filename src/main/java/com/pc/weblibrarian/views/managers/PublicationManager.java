@@ -28,12 +28,14 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 // @PreAuthorize(value = "hasAnyRole('ADMIN')")
 @SecuredByRole(value = {"USER"})
 @Route(value = "publicationItem", layout = MainFrame.class)
-@PreserveOnRefresh
+@UIScope
+// @PreserveOnRefresh
 public class PublicationManager extends Fragment
 {
     private static final boolean superadmin = true;

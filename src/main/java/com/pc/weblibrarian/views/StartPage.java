@@ -15,7 +15,6 @@ import com.vaadin.flow.spring.annotation.UIScope;
 // @Component
 @UIScope
 @SecuredByRole(value = {"USER"})
-@PreserveOnRefresh
 @Route(value = "start", layout = MainFrame.class)
 public class StartPage extends VerticalLayout implements BeforeEnterObserver
 {

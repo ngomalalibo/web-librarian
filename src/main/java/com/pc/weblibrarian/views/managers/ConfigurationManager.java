@@ -24,12 +24,14 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 
 @SecuredByRole(value = "ADMIN")
 // @Secured(value = "ADMIN")
 // @PreAuthorize(value = "hasAnyRole('ADMIN')") // Does not work with vaadin views
 @Route(value = "appConfig", layout = MainFrame.class)
-@PreserveOnRefresh
+@UIScope
+// @PreserveOnRefresh
 public class ConfigurationManager extends Fragment implements BeforeEnterObserver
 {
     private static final long serialVersionUID = 1L;
