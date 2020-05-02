@@ -77,34 +77,34 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     private static MongoClient mongo = null;
     private static MongoDatabase db;
     
-    private static MongoCollection<Person> persons; //DB_PERSON
-    private static MongoCollection<Address> addresses; //DB_ADDRESS
-    private static MongoCollection<Author> authors; // DB_AUTHOR
-    private static MongoCollection<CheckInCheckOut> checkInOut;
-    private static MongoCollection<LibraryItem> libraryItem; //DB_LIBRARYITEMINVNTRY
-    private static MongoCollection<LibraryUser> libraryUser;
-    private static MongoCollection<Media> media; // DB_MEDIA
-    private static MongoCollection<Organization> organization; //DB_ORGANIZATION
-    private static MongoCollection<Publication> publication; //DB_PUBLICATION
-    private static MongoCollection<Publisher> publisher; // DB_PUBLISHER
-    private static MongoCollection<UserVerification> userVerification; //DB_USER
-    private static MongoCollection<WaitingList> waitingList; //DB_WAITLIST
-    private static MongoCollection<ActivityLog> activityLog; //DB_ACTIVITYLOG
-    private static MongoCollection<AppConfiguration> appConfig; //DB_APPCONFIG
-    private static MongoCollection<OrderTransaction> orders; //DB_ORDERS
-    private static MongoCollection<Article> articles; //DB_ARTICLES
-    private static MongoCollection<Note> notes; //DB_NOTES
-    private static MongoCollection<Comment> comments; // DB_COMMENTS
-    private static MongoCollection<CheckInCheckOut> checkInCheckOut;//DB_CHECKINCHECKOUT
-    private static MongoCollection<Quotation> quotes;//DB_QUOTES
-    private static MongoCollection<LibraryItemLocation> libItemLocation;//DB_QUOTES
-    private static MongoCollection<Login> login;//DB_QUOTES
-    private static MongoCollection<MetaData> metaData;//DB_QUOTES
-    private static MongoCollection<OrderItem> orderItem;//DB_QUOTES
-    private static MongoCollection<Pricing> pricing;//DB_QUOTES
-    private static MongoCollection<Session> session;//DB_QUOTES
-    private static MongoCollection<ShippingInformation> shippingInformation;//DB_QUOTES
-    private static MongoCollection<Document> document;//DB_QUOTES
+    public static MongoCollection<Person> persons; //DB_PERSON
+    public static MongoCollection<Address> addresses; //DB_ADDRESS
+    public static MongoCollection<Author> authors; // DB_AUTHOR
+    public static MongoCollection<CheckInCheckOut> checkInOut;
+    public static MongoCollection<LibraryItem> libraryItem; //DB_LIBRARYITEMINVNTRY
+    public static MongoCollection<LibraryUser> libraryUser;
+    public static MongoCollection<Media> media; // DB_MEDIA
+    public static MongoCollection<Organization> organization; //DB_ORGANIZATION
+    public static MongoCollection<Publication> publication; //DB_PUBLICATION
+    public static MongoCollection<Publisher> publisher; // DB_PUBLISHER
+    public static MongoCollection<UserVerification> userVerification; //DB_USER
+    public static MongoCollection<WaitingList> waitingList; //DB_WAITLIST
+    public static MongoCollection<ActivityLog> activityLog; //DB_ACTIVITYLOG
+    public static MongoCollection<AppConfiguration> appConfig; //DB_APPCONFIG
+    public static MongoCollection<OrderTransaction> orders; //DB_ORDERS
+    public static MongoCollection<Article> articles; //DB_ARTICLES
+    public static MongoCollection<Note> notes; //DB_NOTES
+    public static MongoCollection<Comment> comments; // DB_COMMENTS
+    public static MongoCollection<CheckInCheckOut> checkInCheckOut;//DB_CHECKINCHECKOUT
+    public static MongoCollection<Quotation> quotes;//DB_QUOTES
+    public static MongoCollection<LibraryItemLocation> libItemLocation;//DB_QUOTES
+    public static MongoCollection<Login> login;//DB_QUOTES
+    public static MongoCollection<MetaData> metaData;//DB_QUOTES
+    public static MongoCollection<OrderItem> orderItem;//DB_QUOTES
+    public static MongoCollection<Pricing> pricing;//DB_QUOTES
+    public static MongoCollection<Session> session;//DB_QUOTES
+    public static MongoCollection<ShippingInformation> shippingInformation;//DB_QUOTES
+    public static MongoCollection<Document> document;//DB_QUOTES
     
     public static CodecRegistry getCodecRegistry()
     {
