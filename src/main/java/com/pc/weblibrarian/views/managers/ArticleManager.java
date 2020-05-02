@@ -33,7 +33,6 @@ import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 
@@ -185,7 +184,9 @@ public class ArticleManager extends Fragment
         topRow.join(title, articleColumn).setComponent(new Label("Article Information"));
         
         addHeaderComponent(new H1("Fragment Main Header"));
-        addHeaderComponent(new H3("Articles"));
+        H3 label = new H3("Articles");
+        label.addClassName("text-success");
+        addHeaderComponent(label);
         
         SmallButton addentity = new SmallButton("New Article").theme(ButtonVariant.LUMO_PRIMARY.getVariantName());
 //        addentity.setIcon(new Icon("lumo", "add"));

@@ -29,7 +29,6 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 
@@ -240,7 +239,10 @@ public class AuthorManager extends Fragment
         topRow.join(biography, wikiLink).setComponent(new Label("Author Information"));
         
         addHeaderComponent(new H1("Fragment Main Header"));
-        addHeaderComponent(new H3("Authors Manager"));
+        
+        H3 label = new H3("Authors Manager");
+        label.addClassName("text-success");
+        addHeaderComponent(label);
         
         // TODO> search fo icons and themes using Variant, VaadinIcon.ADD_DOCK API
         SmallButton addentity = new SmallButton("New Author").theme("primary");

@@ -17,15 +17,13 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.router.*;
-import com.vaadin.flow.server.InitialPageSettings;
-import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.server.*;
 import com.vaadin.flow.spring.annotation.UIScope;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.nodes.Element;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +35,24 @@ import java.util.concurrent.Executors;
 @JsModule("./styles/jquery-3.4.1.min.js")
 @JsModule("./styles/popper.min.js")
 @JsModule("./styles/modernizr-2.8.3-respond-1.4.2.min.js")*/
+
+/*@JavaScript("./styles/jquery-3.4.1.min.js")
+@JavaScript("./styles/jquery-1.11.2.min.js")
+@JavaScript("./styles/popper.min.js")
+@JavaScript("./styles/modernizr-2.8.3-respond-1.4.2.min.js")
+@JavaScript("./styles/bootstrap.js")*/
 @UIScope
 @org.springframework.stereotype.Component
 @PreserveOnRefresh
 @Slf4j
-@JsModule("./styles/shared-styles.js") // . referenceces the webapp directory in main directory
+@JsModule("./styles/shared-styles.js") // . referenceces the frontend directory in main directory
+
+/*@Inline(value = "jquery-3.4.1.min.js", target = TargetElement.BODY, position = Inline.Position.APPEND, wrapping = Inline.Wrapping.NONE)
+@Inline(value = "/styles/jquery-1.11.2.min.js", target = TargetElement.BODY, position = Inline.Position.APPEND, wrapping = Inline.Wrapping.NONE)
+@Inline(value = "/styles/popper.min.js", target = TargetElement.BODY, position = Inline.Position.APPEND, wrapping = Inline.Wrapping.NONE)
+@Inline(value = "/styles/modernizr-2.8.3-respond-1.4.2.min.js", target = TargetElement.BODY, position = Inline.Position.APPEND, wrapping = Inline.Wrapping.NONE)
+@Inline(value = "/styles/modernizr-2.8.3-respond-1.4.2.min.js", target = TargetElement.BODY, position = Inline.Position.APPEND, wrapping = Inline.Wrapping.NONE)*/
+
 @CssImport("./styles/css/all.css")
 @CssImport("./styles/css/maincss.css")
 @CssImport("./styles/css/animate.css")
@@ -51,7 +62,7 @@ import java.util.concurrent.Executors;
 // @RoutePrefix(value = "", absolute = true)
 // @PreAuthorize(value = "hasRole('USER')")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
-public class MainFrame extends AppLayout implements PageConfigurator, BeforeEnterObserver
+public class MainFrame extends AppLayout implements PageConfigurator, BeforeEnterObserver, BootstrapListener
 {
     
     private NavigationBar sidenavbar;
@@ -59,11 +70,12 @@ public class MainFrame extends AppLayout implements PageConfigurator, BeforeEnte
     public MainFrame()
     {
         super();
-        UI.getCurrent().getPage().addJavaScript("./styles/jquery-3.4.1.min.js");
-        UI.getCurrent().getPage().addJavaScript("./styles/jquery-1.11.2.min.js");
-        UI.getCurrent().getPage().addJavaScript("./styles/popper.min.js");
-        UI.getCurrent().getPage().addJavaScript("./styles/modernizr-2.8.3-respond-1.4.2.min.js");
-        UI.getCurrent().getPage().addJavaScript("./styles/bootstrap.js");
+        //UI.getCurrent().getElement().removeFromTree();
+        /*UI.getCurrent().getPage().addJavaScript("/styles/jquery-3.4.1.min.js");
+        UI.getCurrent().getPage().addJavaScript("/styles/jquery-1.11.2.min.js");
+        UI.getCurrent().getPage().addJavaScript("/styles/popper.min.js");
+        UI.getCurrent().getPage().addJavaScript("/styles/modernizr-2.8.3-respond-1.4.2.min.js");
+        UI.getCurrent().getPage().addJavaScript("/styles/bootstrap.js");*/
         
         getElement().setAttribute("theme", "dark");
         
@@ -217,7 +229,9 @@ public class MainFrame extends AppLayout implements PageConfigurator, BeforeEnte
         attributes.put("rel", "apple-touch-icon");
         attributes.put("rel", "shortcut icon");
         settings.addLink(faviconhref, attributes);
-    
+        /*settings.addInlineWithContents(
+                "<link rel=\"shortcut icon\" href=\"icons/favicon.ico\">",
+                InitialPageSettings.WrapMode.NONE);*/
         
         /*{
             HashMap<String, String> attributes = new HashMap<>();
@@ -276,5 +290,13 @@ public class MainFrame extends AppLayout implements PageConfigurator, BeforeEnte
                                           });
                             });
         });
+    }
+    
+    @Override
+    public void modifyBootstrapPage(BootstrapPageResponse response)
+    {
+        final Element head = response.getDocument().head();
+        head.append(
+                "<link rel=\"shortcut icon\" href=\"icons/favicon.ico\">");
     }
 }

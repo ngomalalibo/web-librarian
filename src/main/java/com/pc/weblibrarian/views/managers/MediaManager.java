@@ -165,7 +165,10 @@ public class MediaManager extends Fragment
                                 }).setFlexGrow(0).setWidth("100px").setResizable(true);
         
         addHeaderComponent(new H1("Fragment Main Header"));
-        addHeaderComponent(new H3("Media"));
+    
+        H3 label = new H3("Media");
+        label.addClassName("text-success");
+        addHeaderComponent(label);
         
         SmallButton addentity = new SmallButton("New Library Item").theme("primary");
 //        addentity.setIcon(new Icon("lumo", "add"));

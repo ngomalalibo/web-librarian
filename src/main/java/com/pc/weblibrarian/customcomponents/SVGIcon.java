@@ -2,7 +2,8 @@ package com.pc.weblibrarian.customcomponents;
 
 import com.vaadin.flow.component.html.Image;
 
-public class SVGIcon extends Image
+public class
+SVGIcon extends Image
 {
     
     private final String prefx = "images/svg/";

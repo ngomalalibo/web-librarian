@@ -143,7 +143,10 @@ public class PublisherManager extends Fragment
                                     return fl;
                                 }).setFlexGrow(0).setWidth("100px").setResizable(true);
         addHeaderComponent(new H1("Fragment Main Header"));
-        addHeaderComponent(new H3("Authors Manager"));
+        
+        H3 label = new H3("Publishers");
+        label.addClassName("text-success");
+        addHeaderComponent(label);
         
         
         // TODO> search fo icons and themes using Variant, VaadinIcon.ADD_DOCK API

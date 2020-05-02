@@ -10,8 +10,8 @@
 
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -38,15 +38,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-        <!--<pluginRepository>
-            <id>vaadin-prereleases</id>
-            <url>
-                https://maven.vaadin.com/vaadin-prereleases/
-            </url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>-->
+
         <pluginRepository>
             <id>vaadin-prerelease</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
@@ -66,15 +58,7 @@
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </repository>
 
-        <!--<repository>
-            <id>vaadin-prereleases</id>
-            <url>
-                https://maven.vaadin.com/vaadin-prereleases/
-            </url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>-->
+
         <!-- Repository used by many Vaadin add-ons -->
         <repository>
             <id>Vaadin Directory</id>
@@ -157,12 +141,6 @@
             <version>0.9.1</version>
         </dependency>
 
-        <!--<dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-spring</artifactId>
-            <version>2.0.0</version>
-        </dependency>-->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -172,13 +150,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!--
-
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-jpa</artifactId>
-                </dependency>
-        -->
 
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -229,46 +200,7 @@
             <version>3.0-Final</version>
         </dependency>
 
-        <!--
 
-                <dependency>
-                    <groupId>com.sun.jersey</groupId>
-                    <artifactId>jersey-core</artifactId>
-                    <version>1.13-b01</version>
-                </dependency>
-
-
-                <dependency>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                    <version>4.3.6</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpmime</artifactId>
-                    <version>4.3.6</version>
-                </dependency>
-
-                <dependency>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpasyncclient</artifactId>
-                    <version>4.0.2</version>
-                </dependency>
-        -->
-
-
-        <!--<dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring5</artifactId>
-            <version>3.0.11.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>3.0.11.RELEASE</version>
-        </dependency>-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -292,11 +224,7 @@
             <artifactId>mongodb-driver-sync</artifactId>
             <version>3.9.0</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.12.0</version>
-        </dependency>-->
+
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>javax.persistence-api</artifactId>
@@ -353,12 +281,6 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -418,23 +340,11 @@
             <version>4.4.1-1</version>
         </dependency>
 
-        <!--<dependency>
-            <groupId>net.sargue</groupId>
-            <artifactId>mailgun</artifactId>
-            <version>1.9.0</version>
-        </dependency>-->
-
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
-
-        <!--<dependency>
-            <groupId>com.mashape.unirest</groupId>
-            <artifactId>unirest-java</artifactId>
-            <version>1.4.9</version>
-        </dependency>-->
 
         <dependency>
             <groupId>javax.mail</groupId>
@@ -445,68 +355,6 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
-        <!-- recently added in search of @SpringView annotation-->
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-spring-boot</artifactId>
-            &lt;!&ndash;            <version>${vaadin-spring.version}</version>&ndash;&gt;
-        </dependency>-->
-        <!-- recently added in search of @SpringView annotation-->
-
-        <!--<dependency>
-            <groupId>de.bild.backend</groupId>
-            <artifactId>polymorphia</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.dozd</groupId>
-            <artifactId>mongo-mapper</artifactId>
-            <version>1.0.10</version>
-        </dependency>-->
-
-
-        <!--
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.1.0</version>
-            <scope>test</scope>
-        </dependency>
-
-
-
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
-            <version>2.0.4.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>5.0.7.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>5.0.7.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.0.3.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>5.0.7.RELEASE</version>
-        </dependency>
-        -->
 
     </dependencies>
 
@@ -624,25 +472,13 @@
                         <artifactId>heroku-maven-plugin</artifactId>
                         <version>2.0.13</version>
                         <configuration>
-                            <appName>vaadin-heroku-app</appName>
+                            <appName>wweblibrariannoenv</appName>
                             <processTypes>
                                 <web>java -jar target/web-librarian-project-2.0-SNAPSHOT.war</web>
                             </processTypes>
                         </configuration>
                     </plugin>
 
-                    <!--<plugin>
-                        <groupId>com.vaadin</groupId>
-                        <artifactId>vaadin-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>build-frontend</goal>
-                                </goals>
-                                <phase>compile</phase>
-                            </execution>
-                        </executions>
-                    </plugin>-->
                 </plugins>
             </build>
         </profile>

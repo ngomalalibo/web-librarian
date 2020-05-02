@@ -26,7 +26,6 @@ import com.vaadin.flow.data.provider.ConfigurableFilterDataProvider;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 
@@ -142,7 +141,10 @@ public class LibraryUserManager extends Fragment
                                     return fl;
                                 }).setFlexGrow(0).setWidth("100px").setResizable(true);
         addHeaderComponent(new H1("Fragment Main Header"));
-        addHeaderComponent(new H3("Library Users"));
+        
+        H3 label = new H3("Library Users");
+        label.addClassName("text-success");
+        addHeaderComponent(label);
         
         SmallButton addentity = new SmallButton("New Library User").theme("primary");
 //        addentity.setIcon(new Icon("lumo", "add"));

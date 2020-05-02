@@ -29,6 +29,8 @@ public class Fragment extends FlexLayout
         setSizeFull();
         titleA.setClassName("gridellipsis");
         titleA.getStyle().set("flexGrow", "1");
+        titleA.addClassName("text-success");
+        
         titleB.getStyle().set("flexGrow", "2");
         titleB.setClassName("gridellipsis");
         titleB.setJustifyContentMode(JustifyContentMode.END);

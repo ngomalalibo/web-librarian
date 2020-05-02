@@ -26,10 +26,8 @@ import com.vaadin.flow.data.provider.ConfigurableFilterDataProvider;
 import com.vaadin.flow.data.provider.Query;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 // @PreAuthorize(value = "hasAnyRole('ADMIN')")
 @SecuredByRole(value = {"USER"})
@@ -167,7 +165,10 @@ public class PublicationManager extends Fragment
                                 }).setFlexGrow(0).setWidth("100px").setResizable(true);
         
         addHeaderComponent(new H1("Fragment Main Header"));
-        addHeaderComponent(new H3("Publications"));
+        
+        H3 label = new H3("Publications");
+        label.addClassName("text-success");
+        addHeaderComponent(label);
         
         SmallButton addentity = new SmallButton("New Library Item").theme("primary");
 //        addentity.setIcon(new Icon("lumo", "add"));
