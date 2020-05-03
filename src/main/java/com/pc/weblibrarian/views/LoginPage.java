@@ -18,7 +18,7 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.spring.annotation.VaadinSessionScope;
+import com.vaadin.flow.spring.annotation.UIScope;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 @Slf4j
-@VaadinSessionScope
+@UIScope
 @Component
 @PageTitle("Login | Vaadin Web Librarian CRM")
 @Theme(value = Lumo.class, variant = Lumo.DARK)
