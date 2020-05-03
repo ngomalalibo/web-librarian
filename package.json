@@ -4,6 +4,9 @@
   "vaadin": {
     "disableUsageStatistics": true
   },
+  "engines": {
+    "node": "14.0.0"
+  },
   "dependencies": {
     "@polymer/polymer": "3.2.0",
     "@webcomponents/webcomponentsjs": "^2.2.10",
