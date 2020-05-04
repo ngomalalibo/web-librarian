@@ -115,11 +115,13 @@ public class SecurityUtils extends HandlerInterceptorAdapter
             List<String> dd;
             if (values.contains(","))
             {
-                dd = List.of(values.split(","));
+                // dd = List.of(values.split(","));
+                dd = Arrays.asList(values.split(","));
             }
             else
             {
-                dd = List.of(values.split(" "));
+                // dd = List.of(values.split(" "));
+                dd = Arrays.asList(values.split(" "));
             }
             
             viewRoles = dd.stream().map(String::trim).collect(Collectors.toList());

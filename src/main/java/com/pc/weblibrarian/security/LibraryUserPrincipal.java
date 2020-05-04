@@ -25,7 +25,8 @@ public class LibraryUserPrincipal implements UserDetails
         Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
         
         PersonRoleType[] availableRoles = PersonRoleType.getAvailableRoles(this.user.getPersonRoleTypes());
-        List.of(availableRoles).forEach(d -> grantedAuthorities.add(new SimpleGrantedAuthority(PersonRoleType.getDisplayText(d))));
+        // List.of(availableRoles).forEach(d -> grantedAuthorities.add(new SimpleGrantedAuthority(PersonRoleType.getDisplayText(d))));
+        Arrays.asList(availableRoles).forEach(d -> grantedAuthorities.add(new SimpleGrantedAuthority(PersonRoleType.getDisplayText(d))));
         
         return grantedAuthorities;
         // return SetUtils.singletonSet(new SimpleGrantedAuthority(this.user.getPersonRoleTypes().displayText()));

@@ -239,7 +239,8 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     
     public static HashMap<String, Class<?>> mapObjectAndClazzNames()
     {
-        return new HashMap<>()
+        // return new HashMap<String, Class<?>>()
+        return new HashMap<String, Class<?>>()
         {{
             put("ActivityLog", ActivityLog.class);
             put("Address", Address.class);

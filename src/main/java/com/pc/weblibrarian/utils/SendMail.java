@@ -11,10 +11,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 public class SendMail
 {
@@ -89,7 +86,8 @@ public class SendMail
             MimeMessage message = new MimeMessage(session);
             
             message.setFrom(new InternetAddress(username != null ? username : "weblibrarianapp@gmail.com"));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", List.of(username != null ? username : "weblibrarianapp@gmail.com", actionableEmail.getToAddresses()))));
+            // message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", List.of(username != null ? username : "weblibrarianapp@gmail.com", actionableEmail.getToAddresses()))));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", Arrays.asList(username != null ? username : "weblibrarianapp@gmail.com", actionableEmail.getToAddresses()))));
             message.setSubject(actionableEmail.getSubject());
             message.setSentDate(new Date());
             message.setContent(actionableEmail.getMessage(), "text/html");

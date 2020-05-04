@@ -47,6 +47,7 @@ import org.bson.types.Binary;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
@@ -362,7 +363,8 @@ public class PersonCRUDDialog extends BasicDialog
                                   {
                                       binder.writeBean(pcbean);
                                       addressBinder.writeBean(addressBean);
-                                      pcbean.setAddressIds(List.of(addressBean.getUuid()));
+                                      // pcbean.setAddressIds(List.of(addressBean.getUuid()));
+                                      pcbean.setAddressIds(Arrays.asList(addressBean.getUuid()));
                                       /*List<Address> addresses = addressLB.getDataProvider().fetch(new Query<>()).collect(Collectors.toList());
                 
                                       addresses.forEach(f ->

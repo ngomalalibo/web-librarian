@@ -37,7 +37,8 @@ public class UploadImageDialog extends BasicDialog
                                             String name = succeededEvent.getFileName();
                                             File file = new File(ImageUtil.FILE_PATH + name);
                                             OutputStream outputBuffer = new FileOutputStream(file);
-                                            byte[] data = fileContent.readAllBytes();
+                                            // byte[] data = fileContent.readAllBytes();
+                                            byte[] data = new byte[fileContent.available()];
                                             outputBuffer.write(data);
                                             ImageModel imageModel = new ImageModel(name, file.getPath(), data);
                 

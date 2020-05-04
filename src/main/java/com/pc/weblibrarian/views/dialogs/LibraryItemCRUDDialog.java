@@ -42,8 +42,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -62,7 +62,8 @@ public class LibraryItemCRUDDialog extends BasicDialog
     
     private Publication publicationClone = new Publication();
     final Address address = new Address("city", new State("Lagos", "ng"), "100001", new Country("Nigeria", "ng"), true, "street", AddressType.MAILINGADDRESS);
-    final Person person = new Person(PersonTitleType.MR, PersonGenderType.MALE, "Publisher", "Name", "AKA", "publisher@mail.com", "080382749272", "website", null, LocalDate.now(), List.of(address.getUuid()));
+    // final Person person = new Person(PersonTitleType.MR, PersonGenderType.MALE, "Publisher", "Name", "AKA", "publisher@mail.com", "080382749272", "website", null, LocalDate.now(), List.of(address.getUuid()));
+    final Person person = new Person(PersonTitleType.MR, PersonGenderType.MALE, "Publisher", "Name", "AKA", "publisher@mail.com", "080382749272", "website", null, LocalDate.now(), Arrays.asList(address.getUuid()));
     final Author author = new Author("authwiki", "authbio", person.getUuid());
     final Publisher publisher = new Publisher("Macmillan", "www", "CR", "wiki", address.getUuid(), person.getUuid());
     private Publication publication = new Publication("Edition", "Art", "1234567890987", "Title-Name", Locale.getDefault().getDisplayLanguage(), "Desc", "Rev", "2019", null, LocalDate.now(),
@@ -237,7 +238,8 @@ public class LibraryItemCRUDDialog extends BasicDialog
             bean.setLibraryItemName("Name");
             bean.setLibraryItemType(LibraryItemType.MEDIA);
             bean.setMaximumCheckoutCopies(1);
-            bean.setPricingInformation(List.of(new Pricing(5000D, Currency.NGN, PricingType.BUY_NEW)));
+            // bean.setPricingInformation(List.of(new Pricing(5000D, Currency.NGN, PricingType.BUY_NEW)));
+            bean.setPricingInformation(Arrays.asList(new Pricing(5000D, Currency.NGN, PricingType.BUY_NEW)));
             
             bean.setMedia(media);
             bean.setLibraryItemTypeId(media.getUuid());
@@ -474,7 +476,8 @@ public class LibraryItemCRUDDialog extends BasicDialog
                                           pricing = new Pricing(unitCost.getValue().doubleValue(), (Currency) currency.getValue(), (PricingType) pricingType.getValue());
                                           bean.setLibraryItemLocation(lil);
                                           bean.setShippingInformation(shipping);
-                                          bean.setPricingInformation(List.of(pricing));
+                                          // bean.setPricingInformation(List.of(pricing));
+                                          bean.setPricingInformation(Arrays.asList(pricing));
                     
                                           //gather item type info
                                           if (libraryItemType.getValue() == null)
@@ -568,7 +571,8 @@ public class LibraryItemCRUDDialog extends BasicDialog
                                           pricing = new Pricing(unitCost.getValue().doubleValue(), (Currency) currency.getValue(), (PricingType) pricingType.getValue());
                                           bean.setLibraryItemLocation(lil);
                                           bean.setShippingInformation(shipping);
-                                          bean.setPricingInformation(List.of(pricing));
+                                          // bean.setPricingInformation(List.of(pricing));
+                                          bean.setPricingInformation(Arrays.asList(pricing));
                     
                                           //gather item type info
                                           if (libraryItemType.getValue() == null)

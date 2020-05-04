@@ -133,11 +133,15 @@ public class GenericDataService
             // Optional<AggregateIterable<B>> aggregate = Optional.of(collection.aggregate(pipeline));
             Optional<AggregateIterable<B>> aggregate = Optional.of(collection.aggregate(pipeline));
             aggregate.get().iterator().forEachRemaining(searchResult::add);
-            aggregate.ifPresentOrElse(d ->
+            /*aggregate.ifPresentOrElse(d ->
                                       {
                                           d.iterator().forEachRemaining(searchResult::add);
                                       }, () ->
                                       {
+                                      });*/
+            aggregate.ifPresent(d ->
+                                      {
+                                          d.iterator().forEachRemaining(searchResult::add);
                                       });
             //searchResult.forEach(d -> System.out.println("Id " + ((B) d).getUuid()));
             return searchResult;
@@ -235,7 +239,8 @@ public class GenericDataService
                                                                              List<Object> subIds = new ArrayList<>();
                                                                              if (List.class.isAssignableFrom(type))
                                                                              {
-                                                                                 subIds = List.of(field.get(mr));
+                                                                                 // subIds = List.of(field.get(mr));
+                                                                                 subIds = Collections.singletonList(field.get(mr));
                                                                              }
                             
                                                                              Bson subFilter = Aggregates.match(Filters.in(foreignKey, subIds));

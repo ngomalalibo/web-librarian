@@ -1,5 +1,6 @@
 package com.pc.weblibrarian.views;
 
+import com.google.common.base.Strings;
 import com.pc.weblibrarian.customcomponents.SmallButton;
 import com.pc.weblibrarian.dataService.GenericDataService;
 import com.pc.weblibrarian.entity.ActivityLog;
@@ -137,8 +138,10 @@ public class LoginPage extends VerticalLayout implements PageConfigurator, Befor
                                            loginStatus = true;
                                            loginForm.close();
                 
-                                           if (!requestCache.resolveRedirectUrl().isEmpty() || !requestCache.resolveRedirectUrl().isBlank())
+                                           // if (!requestCache.resolveRedirectUrl().isEmpty() || !requestCache.resolveRedirectUrl().isBlank())
+                                           if (!Strings.isNullOrEmpty(requestCache.resolveRedirectUrl()))
                                            {
+                                               
                                                UI.getCurrent().navigate(requestCache.resolveRedirectUrl());
                                            }
                                            else

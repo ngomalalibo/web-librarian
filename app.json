@@ -1,0 +1,18 @@
+{
+  "name": "Web Librarian CMS",
+  "description": "A self-service library and Content Management System (CMS).",
+  "repository": "https://github.com/ngomalalibo/web-librarian.git",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["CMS", "Library", "Java", "Vaadin", "Spring"],
+  "env": {
+	"SPRING_DATA_MONGODB_URI":"mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian",
+	"HEROKU_API_KEY":"08c55b35-c661-4a86-868f-5d7dfed390cd"
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/jvm"
+    }
+  ],
+   "success_url": "/"
+  }
+}

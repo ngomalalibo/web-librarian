@@ -276,7 +276,8 @@ public class PersistingBaseEntity implements Serializable, Persistable, Cloneabl
                 
                 //System.out.println("****Activity Log Completed****");
                 Bson query = Filters.eq("_id", t.getUuid());
-                Optional.ofNullable(collection.find(query)).ifPresentOrElse(d -> gt.set((T) d.iterator().tryNext()), () -> gt.set((T) activityLog));
+                // Optional.ofNullable(collection.find(query)).ifPresentOrElse(d -> gt.set((T) d.iterator().tryNext()), () -> gt.set((T) activityLog));
+                Optional.ofNullable(collection.find(query)).ifPresent(d -> gt.set((T) d.iterator().tryNext()));
             }
             else
             {
