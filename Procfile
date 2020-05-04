@@ -1,1 +1,1 @@
-web: java -jar target/web-librarian-project-2.0-SNAPSHOT.war
+web: java -jar target/dependency/webapp-runner.jar target/web-librarian-project-2.0-SNAPSHOT.war

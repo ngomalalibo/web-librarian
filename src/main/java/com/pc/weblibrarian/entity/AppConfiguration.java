@@ -86,8 +86,8 @@ public class AppConfiguration extends PersistingBaseEntity
         
         
         super.prepersist(this);
-        this.setDatabaseURI(System.getenv("SPRING_DATA_MONGODB_URI"));
-        this.setDatabaseURL(System.getenv("SPRING_DATA_MONGODB_URI_LOCAL"));
+        this.setDatabaseURI(System.getenv().get("SPRING_DATA_MONGODB_URI"));
+        this.setDatabaseURL(System.getenv().get("SPRING_DATA_MONGODB_URI_LOCAL"));
         //
         // this.setDomain(System.getenv("WEBLIBRARIAN_DOMAIN"));
         // this.setOrganizationName(System.getenv("WEBLIBRARIAN_ORGANIZATIONNAME"));
