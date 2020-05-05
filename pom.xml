@@ -349,20 +349,19 @@
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>com.heroku</groupId>
             <artifactId>webapp-runner</artifactId>
             <version>9.0.30.0</version>
-&lt;!&ndash;            <scope>provided</scope>&ndash;&gt;
-        </dependency>-->
+            <scope>provided</scope>
+        </dependency>
 
 
-        <!-- <dependency>
-             <groupId>com.heroku</groupId>
-             <artifactId>webapp-runner-main</artifactId>
-             <version>9.0.30.0</version>
-         </dependency>
- -->
+        <dependency>
+            <groupId>com.heroku</groupId>
+            <artifactId>webapp-runner-main</artifactId>
+            <version>${webapp-runner.version}</version>
+        </dependency>
 
     </dependencies>
 
@@ -443,8 +442,10 @@
                         <buildpack>heroku/jvm</buildpack>
                     </buildpacks>
                     <processTypes>
-                        <web>java -jar target/dependency/webapp-runner.jar
-                            target/web-librarian-project-2.0-SNAPSHOT.war
+                        <web>
+                            <!--java $JAVA_OPTS -jar target/dependency/webapp-runner.jar
+                            target/web-librarian-project-2.0-SNAPSHOT.war-->
+                            java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
                         </web>
                     </processTypes>
                 </configuration>
@@ -465,7 +466,7 @@
                                 <artifactItem>
                                     <groupId>com.heroku</groupId>
                                     <artifactId>webapp-runner</artifactId>
-                                    <version>9.0.30.0</version>
+                                    <version>${webapp-runner.version}</version>
                                     <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
@@ -537,20 +538,6 @@
                         </executions>
                     </plugin>
 
-                    <!--<plugin>
-                        <groupId>com.vaadin</groupId>
-                        <artifactId>vaadin-maven-plugin</artifactId>
-                        <version>${vaadin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>prepare-frontend</goal>
-                                    <goal>build-frontend</goal>
-                                </goals>
-                                <phase>compile</phase>
-                            </execution>
-                        </executions>
-                    </plugin>-->
                     <plugin>
                         <groupId>com.heroku.sdk</groupId>
                         <artifactId>heroku-maven-plugin</artifactId>
@@ -561,8 +548,10 @@
                                 <buildpack>heroku/jvm</buildpack>
                             </buildpacks>
                             <processTypes>
-                                <web>java -jar target/dependency/webapp-runner.jar
-                                    target/web-librarian-project-2.0-SNAPSHOT.war
+                                <web>
+                                    <!--java $JAVA_OPTS  -jar target/dependency/webapp-runner.jar
+                                    target/web-librarian-project-2.0-SNAPSHOT.war-->
+                                    java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
                                 </web>
                             </processTypes>
                         </configuration>
@@ -573,7 +562,7 @@
                         <version>1.9.1</version>
                         <executions>
                             <execution>
-                                <id>install-node-and-npm</id>
+                                <id>install node and npm</id>
                                 <goals>
                                     <goal>install-node-and-npm</goal>
                                 </goals>
@@ -584,18 +573,6 @@
                             <nodeVersion>v14.0.0</nodeVersion>
                         </configuration>
                     </plugin>
-                    <!--<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <version>3.0.1</version>
-                        <executions>
-                            <execution>
-                                <id>copy-dependencies</id>
-                                <phase>package</phase>
-                                <goals><goal>copy-dependencies</goal></goals>
-                            </execution>
-                        </executions>
-                    </plugin>-->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
@@ -610,9 +587,8 @@
                                     <artifactItems>
                                         <artifactItem>
                                             <groupId>com.heroku</groupId>
-                                            S
                                             <artifactId>webapp-runner</artifactId>
-                                            <version>9.0.30.0</version>
+                                            <version>${webapp-runner.version}</version>
                                             <destFileName>webapp-runner.jar</destFileName>
                                         </artifactItem>
                                     </artifactItems>

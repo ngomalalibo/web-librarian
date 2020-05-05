@@ -1,1 +1,1 @@
-web: java -jar target/dependency/webapp-runner.jar target/web-librarian-project-2.0-SNAPSHOT.war
+web: java $JAVA_OPTS  -jar target/dependency/webapp-runner.jar --port $PORT target/*.war --server.port=$PORT
