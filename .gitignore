@@ -1,4 +1,4 @@
-/target/
+#/target/
 .idea/
 .settings
 .project
@@ -33,6 +33,7 @@ dataexport/
 **/utils/SendMailTSL_NotWorking.java
 #
 
+.gitignore
 .env
 *.xlsx
 **/Vaadin14Components.rtf
