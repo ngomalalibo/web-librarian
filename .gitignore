@@ -16,7 +16,7 @@ drivers/
 error-screenshots/
 webpack.generated.js
 
-#application.properties
+application.properties
 dataexport/
 
 #target
