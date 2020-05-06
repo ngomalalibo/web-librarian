@@ -368,6 +368,19 @@
                         <scope>test</scope>
         </dependency>-->
 
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+      <!--  <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.2.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-xjc</artifactId>
+            <version>2.2.11</version>
+        </dependency>-->
+
+
     </dependencies>
 
     <build>
@@ -406,8 +419,18 @@
                 <version>3.8.1</version>
             </plugin>-->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <systemProperties>
+                        <property>
+                            <name>java.endorsed.dirs</name>
+                            <value>${project.build.directory}/endorsed</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -417,7 +440,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
+                        <endorseddirs>${project.build.directory}/endorsed</endorseddirs>
                     </compilerArguments>
                 </configuration>
             </plugin>
@@ -456,9 +479,7 @@
                 <configuration>
                     <appName>weblibrariannoenv</appName>
                     <buildpacks>
-                        <!--                        <buildpack>heroku/nodejs</buildpack>-->
                         <buildpack>heroku/java</buildpack>
-                        <!--                        <buildpack>heroku/jvm</buildpack>-->
                     </buildpacks>
                     <processTypes>
                         <web>
@@ -531,6 +552,7 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
                 <executions>
@@ -563,6 +585,30 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>setup-endorsed</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>javax.xml.bind</groupId>
+                                    <artifactId>jaxb-api</artifactId>
+                                    <version>2.2.11</version>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -580,7 +626,6 @@
                     <artifactId>flow-server-production-mode</artifactId>
                 </dependency>
             </dependencies>
-
             <build>
                 <plugins>
                     <plugin>
@@ -613,7 +658,7 @@
                             <source>1.8</source>
                             <target>1.8</target>
                             <compilerArguments>
-                                <endorseddirs>${endorsed.dir}</endorseddirs>
+                                <endorseddirs>${project.build.directory}/endorsed</endorseddirs>
                             </compilerArguments>
                         </configuration>
                     </plugin>
@@ -723,6 +768,7 @@
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-clean-plugin</artifactId>
                         <version>3.0.0</version>
                         <executions>
@@ -767,6 +813,45 @@
                             </processTypes>
                         </configuration>
                     </plugin>-->
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>setup-endorsed</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>javax.xml.bind</groupId>
+                                            <artifactId>jaxb-api</artifactId>
+                                            <version>2.2.11</version>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <forkCount>1</forkCount>
+                            <reuseForks>true</reuseForks>
+                            <systemProperties>
+                                <property>
+                                    <name>java.endorsed.dirs</name>
+                                    <value>${project.build.directory}/endorsed</value>
+                                </property>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
