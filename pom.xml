@@ -359,7 +359,7 @@
         <dependency>
             <groupId>com.heroku</groupId>
             <artifactId>webapp-runner-main</artifactId>
-            <version>${webapp-runner.version}</version>
+            <version>9.0.30.0</version>
         </dependency>
         <!--<dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -473,7 +473,7 @@
                                 <artifactItem>
                                     <groupId>com.heroku</groupId>
                                     <artifactId>webapp-runner</artifactId>
-                                    <version>${webapp-runner.version}</version>
+                                    <version>9.0.30.0</version>
                                     <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
@@ -617,7 +617,7 @@
                                         <artifactItem>
                                             <groupId>com.heroku</groupId>
                                             <artifactId>webapp-runner</artifactId>
-                                            <version>${webapp-runner.version}</version>
+                                            <version>9.0.30.0</version>
                                             <destFileName>webapp-runner.jar</destFileName>
                                         </artifactItem>
                                     </artifactItems>
