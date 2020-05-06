@@ -9,7 +9,6 @@
     <packaging>war</packaging>
 
     <properties>
-        <!--        <maven.compiler.release>1.8</maven.compiler.release>-->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -150,11 +149,11 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-testbench</artifactId>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
         <!--<dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -320,12 +319,12 @@
             <!--            <version>2.0.3.RELEASE</version>-->
             <!--            <scope>test</scope>-->
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <!--            <version>5.2.0.RELEASE</version>-->
-            <!--            <scope>compile</scope>-->
-        </dependency>
+        <!-- <dependency>
+             <groupId>org.springframework</groupId>
+             <artifactId>spring-test</artifactId>
+                         <version>5.2.0.RELEASE</version>
+                         <scope>compile</scope>
+         </dependency>-->
 
         <dependency>
             <groupId>org.webjars</groupId>
@@ -445,6 +444,8 @@
                 <configuration>
                     <appName>weblibrariannoenv</appName>
                     <buildpacks>
+                        <buildpack>heroku/nodejs</buildpack>
+                        <buildpack>heroku/java</buildpack>
                         <buildpack>heroku/jvm</buildpack>
                     </buildpacks>
                     <processTypes>
@@ -478,55 +479,52 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.3</version>
-                <executions>
                     <execution>
+                        <id>copy-dependencies</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>copy</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.eclipse.jetty</groupId>
-                                    <artifactId>jetty-runner</artifactId>
-                                    <version>${jetty.plugin.version}</version>
-                                    <destFileName>jetty-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
+                            <includeScope>compile</includeScope>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
 
-            <!--            <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-dependency-plugin</artifactId>
-                            <version>3.0.1</version>
-                            <executions>
-                                <execution>
-                                    <id>copy-dependencies</id>
-                                    <phase>package</phase>
-                                    <goals><goal>copy-dependencies</goal></goals>
-                                    <configuration>
-                                        <artifactItems>
-                                            <artifactItem>
-                                                <groupId>com.heroku</groupId>
-                                                <artifactId>webapp-runner</artifactId>
-                                                <version>${webapp-runner.version</version>
-                                                <destFileName>webapp-runner.jar</destFileName>
-                                            </artifactItem>
-                                        </artifactItems>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>-->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>clean-jar-artifacts</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>target/dependency/*.jar</directory>
+                                </fileset>
+                                <fileset>
+                                    <directory>target</directory>
+                                    <excludes>
+                                        <exclude>*.war</exclude>
+                                    </excludes>
+                                </fileset>
+                                <fileset>
+                                    <directory>node_modules</directory>
+                                </fileset>
+                                <fileset>
+                                    <directory>.heroku/node</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -625,31 +623,52 @@
                                     </artifactItems>
                                 </configuration>
                             </execution>
-                        </executions>
-                    </plugin>
-                    <!--<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <version>2.3</version>
-                        <executions>
                             <execution>
+                                <id>copy-dependencies</id>
                                 <phase>package</phase>
                                 <goals>
-                                    <goal>copy</goal>
+                                    <goal>copy-dependencies</goal>
                                 </goals>
                                 <configuration>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>org.eclipse.jetty</groupId>
-                                            <artifactId>jetty-runner</artifactId>
-                                            <version>${jetty.plugin.version}</version>
-                                            <destFileName>jetty-runner.jar</destFileName>
-                                        </artifactItem>
-                                    </artifactItems>
+                                    <includeScope>compile</includeScope>
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>-->
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>clean-jar-artifacts</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                                <configuration>
+                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                                    <filesets>
+                                        <fileset>
+                                            <directory>target/dependency/*.jar</directory>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>target</directory>
+                                            <excludes>
+                                                <exclude>*.war</exclude>
+                                            </excludes>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>node_modules</directory>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>.heroku/node</directory>
+                                        </fileset>
+                                    </filesets>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <!--<plugin>
                         <groupId>com.heroku.sdk</groupId>
                         <artifactId>heroku-maven-plugin</artifactId>
