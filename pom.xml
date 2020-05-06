@@ -9,7 +9,6 @@
     <packaging>war</packaging>
 
     <properties>
-        <endorsed.dir>dependency</endorsed.dir>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -457,15 +456,15 @@
                 <configuration>
                     <appName>weblibrariannoenv</appName>
                     <buildpacks>
-<!--                        <buildpack>heroku/nodejs</buildpack>-->
+                        <!--                        <buildpack>heroku/nodejs</buildpack>-->
                         <buildpack>heroku/java</buildpack>
-<!--                        <buildpack>heroku/jvm</buildpack>-->
+                        <!--                        <buildpack>heroku/jvm</buildpack>-->
                     </buildpacks>
                     <processTypes>
                         <web>
                             <!--java $JAVA_OPTS -jar target/dependency/webapp-runner.jar
                             target/web-librarian-project-2.0-SNAPSHOT.war-->
-                            java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
+                            java $JAVA_OPTS -jar target/endorsed/webapp-runner.jar --port $PORT target/*.war
                         </web>
                     </processTypes>
                 </configuration>
@@ -641,7 +640,7 @@
                                 <web>
                                     <!--java $JAVA_OPTS  -jar target/dependency/webapp-runner.jar
                                     target/web-librarian-project-2.0-SNAPSHOT.war-->
-                                    java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/*.war
+                                    java $JAVA_OPTS -jar target/endorsed/webapp-runner.jar --port $PORT target/*.war
                                 </web>
                             </processTypes>
                         </configuration>
