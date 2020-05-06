@@ -142,6 +142,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-websocket</artifactId>
+            </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -250,11 +256,11 @@
             <artifactId>json</artifactId>
             <version>20190722</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>5.4.1.Final</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -369,16 +375,16 @@
         </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
-      <!--  <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>2.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-xjc</artifactId>
-            <version>2.2.11</version>
-        </dependency>-->
+        <!--  <dependency>
+              <groupId>org.glassfish.jaxb</groupId>
+              <artifactId>jaxb-runtime</artifactId>
+              <version>2.2.11</version>
+          </dependency>
+          <dependency>
+              <groupId>com.sun.xml.bind</groupId>
+              <artifactId>jaxb-xjc</artifactId>
+              <version>2.2.11</version>
+          </dependency>-->
 
 
     </dependencies>
@@ -460,7 +466,7 @@
                 <version>1.9.1</version>
                 <executions>
                     <execution>
-                        <id>install node and npm</id>
+                        <id>install-node-and-npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
@@ -497,6 +503,7 @@
                 <version>3.0.1</version>
                 <executions>
                     <execution>
+                        <id>validate</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>copy</goal>
@@ -514,15 +521,8 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
                     <execution>
+                        <id>webapp-package</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy</goal>
@@ -536,6 +536,7 @@
                                     <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
+                            <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
                         </configuration>
                     </execution>
                     <execution>
@@ -546,6 +547,23 @@
                         </goals>
                         <configuration>
                             <includeScope>compile</includeScope>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>setup-endorsed</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>javax.xml.bind</groupId>
+                                    <artifactId>jaxb-api</artifactId>
+                                    <version>2.2.11</version>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -572,6 +590,7 @@
                                     <directory>target</directory>
                                     <excludes>
                                         <exclude>*.war</exclude>
+                                        <exclude>endorsed/*.jar</exclude>
                                     </excludes>
                                 </fileset>
                                 <fileset>
@@ -585,36 +604,12 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>setup-endorsed</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax.xml.bind</groupId>
-                                    <artifactId>jaxb-api</artifactId>
-                                    <version>2.2.11</version>
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
     <profiles>
-        <profile>
-            <!-- Production mode is activated using -Pproduction -->
+        <!--<profile>
+            &lt;!&ndash; Production mode is activated using -Pproduction &ndash;&gt;
             <id>production</id>
             <properties>
                 <vaadin.productionMode>true</vaadin.productionMode>
@@ -683,39 +678,15 @@
                             </buildpacks>
                             <processTypes>
                                 <web>
-                                    <!--java $JAVA_OPTS  -jar target/dependency/webapp-runner.jar
-                                    target/web-librarian-project-2.0-SNAPSHOT.war-->
-                                    java $JAVA_OPTS -jar target/endorsed/webapp-runner.jar --port $PORT target/*.war
+                                    &lt;!&ndash;java $JAVA_OPTS  -jar target/dependency/webapp-runner.jar
+                                    target/web-librarian-project-2.0-SNAPSHOT.war&ndash;&gt;
+                                    java $JAVA_OPTS -jar target/endorsed/webapp-runner.jar &#45;&#45;port $PORT target/*.war
                                 </web>
                             </processTypes>
                         </configuration>
                     </plugin>
 
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <version>3.0.1</version>
-                        <executions>
-                            <execution>
-                                <phase>validate</phase>
-                                <goals>
-                                    <goal>copy</goal>
-                                </goals>
-                                <configuration>
-                                    <outputDirectory>${endorsed.dir}</outputDirectory>
-                                    <silent>true</silent>
-                                    <artifactItems>
-                                        <artifactItem>
-                                            <groupId>javax</groupId>
-                                            <artifactId>javaee-endorsed-api</artifactId>
-                                            <version>6.0</version>
-                                            <type>jar</type>
-                                        </artifactItem>
-                                    </artifactItems>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+
 
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
@@ -740,6 +711,24 @@
                         <version>3.0.1</version>
                         <executions>
                             <execution>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${endorsed.dir}</outputDirectory>
+                                    <silent>true</silent>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>javax</groupId>
+                                            <artifactId>javaee-endorsed-api</artifactId>
+                                            <version>6.0</version>
+                                            <type>jar</type>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>copy</goal>
@@ -755,7 +744,7 @@
                                     </artifactItems>
                                 </configuration>
                             </execution>
-                            <execution>
+                            &lt;!&ndash;<execution>
                                 <id>copy-dependencies</id>
                                 <phase>package</phase>
                                 <goals>
@@ -764,60 +753,7 @@
                                 <configuration>
                                     <includeScope>compile</includeScope>
                                 </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-clean-plugin</artifactId>
-                        <version>3.0.0</version>
-                        <executions>
-                            <execution>
-                                <id>clean-jar-artifacts</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>clean</goal>
-                                </goals>
-                                <configuration>
-                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
-                                    <filesets>
-                                        <fileset>
-                                            <directory>target/dependency/*.jar</directory>
-                                        </fileset>
-                                        <fileset>
-                                            <directory>target</directory>
-                                            <excludes>
-                                                <exclude>*.war</exclude>
-                                            </excludes>
-                                        </fileset>
-                                        <fileset>
-                                            <directory>node_modules</directory>
-                                        </fileset>
-                                        <fileset>
-                                            <directory>.heroku/node</directory>
-                                        </fileset>
-                                    </filesets>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                    <!--<plugin>
-                        <groupId>com.heroku.sdk</groupId>
-                        <artifactId>heroku-maven-plugin</artifactId>
-                        <version>2.0.13</version>
-                        <configuration>
-                            <appName>weblibrariannoenv</appName>
-                            <processTypes>
-                                <web>java -jar target/web-librarian-project-2.0-SNAPSHOT.war</web>
-                            </processTypes>
-                        </configuration>
-                    </plugin>-->
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
+                            </execution>&ndash;&gt;
                             <execution>
                                 <id>setup-endorsed</id>
                                 <phase>validate</phase>
@@ -837,6 +773,52 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>clean-jar-artifacts</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                                <configuration>
+                                    <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                                    <filesets>
+                                        &lt;!&ndash;<fileset>
+                                            <directory>target/dependency/*.jar</directory>
+                                        </fileset>&ndash;&gt;
+                                        <fileset>
+                                            <directory>target</directory>
+                                            <excludes>
+                                                <exclude>*.war</exclude>
+                                            </excludes>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>node_modules</directory>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>.heroku/node</directory>
+                                        </fileset>
+                                    </filesets>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    &lt;!&ndash;<plugin>
+                        <groupId>com.heroku.sdk</groupId>
+                        <artifactId>heroku-maven-plugin</artifactId>
+                        <version>2.0.13</version>
+                        <configuration>
+                            <appName>weblibrariannoenv</appName>
+                            <processTypes>
+                                <web>java -jar target/web-librarian-project-2.0-SNAPSHOT.war</web>
+                            </processTypes>
+                        </configuration>
+                    </plugin>&ndash;&gt;
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -854,7 +836,7 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile>-->
 
         <!--<profile>
             <id>integration-tests</id>
