@@ -205,13 +205,13 @@
         </dependency>
 
 
-        <!--<dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
-            &lt;!&ndash;<scope>provided</scope>&ndash;&gt;
-            <scope>compile</scope>
-        </dependency>-->
+            <scope>provided</scope>
+<!--            <scope>compile</scope>-->
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -358,7 +358,7 @@
             <groupId>com.heroku</groupId>
             <artifactId>webapp-runner</artifactId>
             <version>9.0.30.0</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
 
@@ -457,6 +457,8 @@
                 <version>3.2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
+                    <warName>${project.artifactId}</warName>
                 </configuration>
             </plugin>
 
@@ -546,6 +548,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
+                            <includeArtifactIds>webapp-runner</includeArtifactIds>
                             <includeScope>compile</includeScope>
                         </configuration>
                     </execution>
