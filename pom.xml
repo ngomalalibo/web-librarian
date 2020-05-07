@@ -144,9 +144,9 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
                 <exclusion>
-                <groupId>org.apache.tomcat.embed</groupId>
-                <artifactId>tomcat-embed-websocket</artifactId>
-            </exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -354,13 +354,12 @@
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
 
-        <dependency>
+        <!--<dependency> use webapp-runner-main below
             <groupId>com.heroku</groupId>
             <artifactId>webapp-runner</artifactId>
             <version>9.0.30.0</version>
             <scope>compile</scope>
-        </dependency>
-
+        </dependency>-->
 
         <dependency>
             <groupId>com.heroku</groupId>
@@ -549,7 +548,7 @@
                         </goals>
                         <configuration>
                             <includeArtifactIds>webapp-runner</includeArtifactIds>
-                            <includeScope>compile</includeScope>
+                            <!--                            <includeScope>compile</includeScope>-->
                         </configuration>
                     </execution>
                     <execution>
