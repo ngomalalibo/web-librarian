@@ -205,13 +205,13 @@
         </dependency>
 
 
-        <dependency>
+        <!--<dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
-            <scope>provided</scope>
-<!--            <scope>compile</scope>-->
-        </dependency>
+&lt;!&ndash;            <scope>provided</scope>&ndash;&gt;
+            <scope>compile</scope>
+        </dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
