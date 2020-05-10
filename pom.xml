@@ -461,7 +461,7 @@
                 <executions>
                     <execution>
                         <id>web-app-clean</id>
-                        <phase>clean</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>prepare-frontend</goal>
                         </goals>
@@ -698,7 +698,7 @@
                         <executions>
                             <execution>
                                 <id>web-app-clean</id>
-                                <phase>clean</phase>
+                                <phase>validate</phase>
                                 <goals>
                                     <goal>prepare-frontend</goal>
                                 </goals>
