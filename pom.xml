@@ -460,7 +460,7 @@
                 <version>${vaadin.version}</version>
                 <executions>
                     <execution>
-                        <id>web-app-clean</id>
+                        <id>frontend</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>prepare-frontend</goal>
@@ -519,7 +519,7 @@
                 <executions>
                     <execution>
                         <id>install-node-and-npm</id>
-                        <phase>generate-resources</phase>
+                        <phase>clean</phase>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
@@ -692,12 +692,23 @@
                         It also creates webpack.config.js if not exists yet.
                     -->
                     <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <!-- Clean build and startup time for Vaadin apps sometimes may exceed
+                             the default Spring Boot's 30sec timeout.  -->
+                        <configuration>
+                            <mainClass>com.pc.weblibrarian.Application</mainClass>
+                            <wait>500</wait>
+                            <maxAttempts>240</maxAttempts>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>vaadin-maven-plugin</artifactId>
                         <version>${vaadin.version}</version>
                         <executions>
                             <execution>
-                                <id>web-app-clean</id>
+                                <id>frontend</id>
                                 <phase>validate</phase>
                                 <goals>
                                     <goal>prepare-frontend</goal>
@@ -705,31 +716,14 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--<plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.1</version>
-                    </plugin>-->
-                    <!--<plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <forkCount>1</forkCount>
-                            <reuseForks>true</reuseForks>
-                            <systemProperties>
-                                <property>
-                                    <name>java.endorsed.dirs</name>
-                                    <value>${project.build.directory}/endorsed</value>
-                                </property>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>-->
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.8.1</version>
                         <executions>
                             <execution>
-                                <id>web-app-compile</id>
+                                <id>webapp-compile</id>
                                 <phase>compile</phase>
                                 <goals>
                                     <goal>compile</goal>
@@ -750,6 +744,13 @@
                         <artifactId>maven-war-plugin</artifactId>
                         <version>3.2.3</version>
                         <executions>
+                            <execution>
+                                <id>webapp-war</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                            </execution>
                         </executions>
                         <configuration>
                             <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -766,7 +767,7 @@
                         <executions>
                             <execution>
                                 <id>install-node-and-npm</id>
-                                <phase>generate-resources</phase>
+                                <phase>clean</phase>
                                 <goals>
                                     <goal>install-node-and-npm</goal>
                                 </goals>
@@ -820,6 +821,24 @@
                                     </artifactItems>
                                 </configuration>
                             </execution>-->
+                            <execution>
+                                <id>webapp-runner</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>com.heroku</groupId>
+                                            <artifactId>webapp-runner</artifactId>
+                                            <version>9.0.30.0</version>
+                                            <destFileName>webapp-runner.jar</destFileName>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
+                                </configuration>
+                            </execution>
 
                             <execution>
                                 <id>copy-dependencies</id>
