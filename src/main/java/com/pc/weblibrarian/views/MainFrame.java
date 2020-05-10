@@ -43,6 +43,7 @@ import java.util.concurrent.Executors;
 @JavaScript("./styles/bootstrap.js")*/
 @UIScope
 @org.springframework.stereotype.Component
+// @SpringComponent
 @PreserveOnRefresh
 @Slf4j
 @JsModule("./styles/shared-styles.js") // . referenceces the frontend directory in main directory

@@ -170,7 +170,6 @@ public class DataInitialization<T extends PersistingBaseEntity> //implements Com
     
     public DataInitialization()
     {
-        Connection con = new Connection();
 //        String dbname1 = con.DBNAME;
 //        String dbname = Connection.DBNAME;
         //pbe = new PersistingBaseEntity();

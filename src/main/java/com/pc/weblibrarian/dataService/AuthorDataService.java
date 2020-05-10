@@ -19,10 +19,6 @@ import java.util.stream.Stream;
 @Service
 public class AuthorDataService
 {
-    public AuthorDataService()
-    {
-    }
-    
     public static Long getAuthorsCount()
     {
         return Optional.of(Connection.authors.countDocuments()).get();

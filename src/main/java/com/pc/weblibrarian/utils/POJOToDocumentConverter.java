@@ -2,7 +2,6 @@ package com.pc.weblibrarian.utils;
 
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
 import com.pc.weblibrarian.dataService.Connection;
 import com.pc.weblibrarian.entity.Note;
 import com.pc.weblibrarian.entity.PersistingBaseEntity;

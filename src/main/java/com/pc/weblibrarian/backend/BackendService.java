@@ -1,17 +1,19 @@
 package com.pc.weblibrarian.backend;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
-public class BackendService {
-
+public class BackendService
+{
+    
     private List<Employee> employees;
-
+    
     {
-    // Init dummy data
-
+        // Init dummy data
+        
         employees = new ArrayList<>();
         employees.add(new Employee("Rowena", "Leeming", "rleeming0@bbc.co.uk", "Food Chemist"));
         employees.add(new Employee("Alvinia", "Delong", "adelong1@altervista.org", "Recruiting Manager"));
@@ -36,9 +38,10 @@ public class BackendService {
         employees.add(new Employee("Isidoro", "Glave", "iglavek@tamu.edu", "Compensation Analyst"));
         employees.add(new Employee("Cchaddie", "Spatarul", "cspatarull@sun.com", "Business Systems Development Analyst"));
     }
-
-    public List<Employee> getEmployees() {
+    
+    public List<Employee> getEmployees()
+    {
         return employees;
     }
-
+    
 }

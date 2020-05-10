@@ -2,13 +2,7 @@ package com.pc.weblibrarian.enums;
 
 import com.pc.weblibrarian.controllers.AuthorController;
 import com.pc.weblibrarian.dataService.AuthorDataService;
-import javassist.bytecode.stackmap.TypeData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public enum PersonRoleType
 {
@@ -90,8 +84,10 @@ public enum PersonRoleType
         }
         return false;
     }
+    
     @Autowired
     private static AuthorDataService authorRepo;
+    
     public static void main(String[] args)
     {
         Object f = new AuthorController(authorRepo);

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@Repository
+// @Repository
 public class GenericManagerDP<Bean extends PersistingBaseEntity> extends AbstractBackEndDataProvider<Bean, String>
 {
     private GenericDataService genericDataService;

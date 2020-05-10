@@ -4,11 +4,13 @@ import com.pc.weblibrarian.views.MainFrame;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 
 //anytime this RouteNotFoundError is thrown vaadin responds with this message. RouteNotFoundError implements HasErrorParameter
+@UIScope
 @Component
 @ParentLayout(MainFrame.class)
 public class RouteExceptionPage extends RouteNotFoundError

@@ -1,11 +1,14 @@
 package com.pc.weblibrarian.applicationlifecycle;
 
+import com.pc.weblibrarian.dataService.Connection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.event.*;
+import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.context.event.ContextStoppedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +22,7 @@ public class LifeCycleBean implements InitializingBean, DisposableBean, BeanName
 {
     public LifeCycleBean()
     {
+        Connection.startDB();
         log.info("## I'm in the LifeCycleBean Constructor");
     }
     
@@ -26,6 +30,7 @@ public class LifeCycleBean implements InitializingBean, DisposableBean, BeanName
     public void destroy() throws Exception
     {
         log.info("## The Lifecycle bean has been terminated");
+        //Connection.stopDB();
         
     }
     
@@ -79,7 +84,7 @@ public class LifeCycleBean implements InitializingBean, DisposableBean, BeanName
         
     }
     
-    @EventListener(classes = {ContextStartedEvent.class, ContextStoppedEvent.class, ContextClosedEvent.class, ContextRefreshedEvent.class})
+    @EventListener(classes = {ContextStartedEvent.class, ContextStoppedEvent.class/*, ContextClosedEvent.class, ContextRefreshedEvent.class*/})
     public void handleMultipleEvents()
     {
         log.info("Multi-event listener invoked");

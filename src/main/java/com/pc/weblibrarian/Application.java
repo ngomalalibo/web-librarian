@@ -6,11 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.context.event.*;
-import org.springframework.web.WebApplicationInitializer;
+import org.springframework.context.event.ContextStartedEvent;
+import org.springframework.context.event.ContextStoppedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,14 +24,23 @@ import javax.servlet.ServletRegistration;
  * The entry point of the Spring Boot application.
  */
 @Slf4j
-// @PropertySources({@PropertySource("classpath:application_env.properties"),
-//         @PropertySource("classpath:application.properties")}
-// )
+// @EnableVaadin({"com.pc.weblibrarian.views"})
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)/*(exclude = {org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class})*/
-// TODO > Option 2: To disable spring security (Doesn not disable security)
-public class Application extends SpringBootServletInitializer implements WebMvcConfigurer, WebApplicationInitializer
+// TODO > Option 2: To disable spring security (Does not disable security)
+public class Application extends SpringBootServletInitializer implements WebMvcConfigurer
 {
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder)
+    {
+        return builder.sources(Application.class);
+        // return super.configure(builder);
+    }
     
+    @Override
+    public void addInterceptors(InterceptorRegistry registry)
+    {
+        registry.addInterceptor(new SecurityUtils());
+    }
     
     public static void main(String[] args)
     {
@@ -45,17 +54,25 @@ public class Application extends SpringBootServletInitializer implements WebMvcC
         System.setErr(System.out);
     }
     
-    @EventListener(classes = {ContextStartedEvent.class, ContextStoppedEvent.class, ContextClosedEvent.class, ContextRefreshedEvent.class})
+    @EventListener(classes = {ContextStartedEvent.class, ContextStoppedEvent.class/*, ContextClosedEvent.class, ContextRefreshedEvent.class*/})
     public void handleMultipleEvents()
     {
-        log.info("Multi-event listener invoked");
+        log.info(" -> Multi-event listener invoked");
     }
     
-    @Override
-    public void addInterceptors(InterceptorRegistry registry)
+    /*@Override
+    public void onStartup(ServletContext container) throws ServletException
     {
-        registry.addInterceptor(new SecurityUtils());
-    }
+        log.info("---------------Web Application Initialized -> onStartup() called");
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(Application.class);
+        context.setServletContext(container);
+        container.addListener(new ContextLoaderListener(context));
+        
+        ServletRegistration.Dynamic registration = container.addServlet("dispatcher", new SpringServlet(context, true));
+        registration.setLoadOnStartup(1);
+        registration.addMapping("/*");
+    }*/
     
     /*@Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
@@ -63,18 +80,7 @@ public class Application extends SpringBootServletInitializer implements WebMvcC
         return application.sources(Application.class);
     }*/
     
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException
-    {
-        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(Application.class);
-        context.setServletContext(servletContext);
-        servletContext.addListener(new ContextLoaderListener(context));
-        
-        ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcher", new SpringServlet(context, true));
-        registration.setLoadOnStartup(1);
-        registration.addMapping("/*");
-    }
+    
     
     /*@Bean
     public ViewResolver internalResourceViewResolver() {

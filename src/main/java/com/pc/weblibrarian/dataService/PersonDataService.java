@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-@Service
+// @Service
 public class PersonDataService
 {
     public static Stream<Person> getPersonsByName(List<SortProperties> sort, String personName)

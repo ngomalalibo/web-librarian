@@ -8,6 +8,7 @@ import com.pc.weblibrarian.codecs.AddressTypeCodec;
 import com.pc.weblibrarian.entity.*;
 import com.pc.weblibrarian.enums.IDPrefixes;
 import com.pc.weblibrarian.model.*;
+import com.vaadin.flow.spring.VaadinServletContextInitializer;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecProvider;
@@ -15,21 +16,18 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.glassfish.jersey.internal.guava.Iterators;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Repository;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import java.util.HashMap;
 import java.util.HashSet;
 
 @Slf4j
 @Repository
-public class Connection<T extends PersistingBaseEntity> implements ServletContextListener
+public class Connection<T extends PersistingBaseEntity> extends VaadinServletContextInitializer
 {
-    
-    private static Logger logger = LoggerFactory.getLogger(Connection.class);
     
     public static final String DBNAME = "weblibrarian";
     public static final String DB_ORGANIZATION = "organization";
@@ -65,10 +63,11 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     public static final String DOCUMENT = "mongoDocument";
     
     // @Value("${spring.data.mongodb.uri}")
-    public static String DBSTR = "mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian";
-    // public static String DBSTR = System.getenv("SPRING_DATA_MONGODB_URI");
+    // public static final String DBSTR = "mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian";
+    // public static final String DBSTR = "mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian?retryWrites=true&maxPoolSize=50&connectTimeoutMS=120000&w=1&wtimeoutMS=240000&socketTimeoutMS=120000&serverSelectionTimeoutMS=120000";
+    public static String DBSTR = System.getenv().get("SPRING_DATA_MONGODB_URI_LOCAL");
 //    static final String DBSTR = "mongodb://localhost:27017?retryWrites=true&maxPoolSize=50&connectTimeoutMS=2000&w=1&wtimeoutMS=2500";
-//     static final String DBSTR = "mongodb://localhost:27017";
+//     static final String DBSTR = "mongodb://localhost:27017/weblibrarian?retryWrites=true&maxPoolSize=50&connectTimeoutMS=20000&w=1&wtimeoutMS=25000&socketTimeoutMS=50000&serverSelectionTimeoutMS=60000";
     
     private static final int LIMIT = 20;
     private static final int SKIP = 0;
@@ -106,6 +105,12 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     public static MongoCollection<ShippingInformation> shippingInformation;//DB_QUOTES
     public static MongoCollection<Document> document;//DB_QUOTES
     
+    public Connection(ApplicationContext context)
+    {
+        super(context);
+    }
+    
+    
     public static CodecRegistry getCodecRegistry()
     {
         final CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
@@ -119,7 +124,7 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     
     public static MongoDatabase startDB()
     {
-        logger.warn("---------------------------- Starting Database");
+        log.warn("---------------------------- Starting Database");
         log.info("Database url -> " + DBSTR);
         ConnectionString connectionString = new ConnectionString(DBSTR);
         
@@ -138,6 +143,14 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
             db = mongo.getDatabase(DBNAME);
             //db.withCodecRegistry(settings.getCodecRegistry());
         }
+    
+        /*List<MongoCredential> creds = new ArrayList<MongoCredential>();  creds.add(MongoCredential.createCredential(username, DBname, password);
+        MongoClientOptions.Builder optionsBuilder = MongoClientOptions.builder();
+        optionsBuilder.connectTimeout(CONNECTION_TIME_OUT_MS);
+        optionsBuilder.socketTimeout(SOCKET_TIME_OUT_MS);
+        optionsBuilder.serverSelectionTimeout(SERVER_SELECTION_TIMEOUT_MS);
+        MongoClientOptions options = optionsBuilder.build();
+        Mongo m = new MongoClient(new ServerAddress(server , port), creds, options);*/
         
         
         
@@ -303,7 +316,7 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     
     public static void stopDB()
     {
-        logger.warn("---------------------------- Stopping Database");
+        log.warn("---------------------------- Stopping Database");
         if (mongo != null)
         {
             mongo.close();
@@ -312,26 +325,29 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
         db = null;
     }
     
-    @Override
+    /*@Override
     public void contextInitialized(ServletContextEvent s)
     {
+        log.info(" -> contextInitialized");
+        //startDB();
         
-        startDB();
-        
-        /**TODO> uncomment 4 lines below to createCollections, initialize database, load defaults and get database statistics
-         * createAllCollections();
-         * initializeDatabase();
-         * DataInitialization.reloadDefaults();
-         * getDBStats();
-         * */
-    }
+        */
     
-    @Override
+    /**
+     * TODO> uncomment 4 lines below to createCollections, initialize database, load defaults and get database statistics
+     * createAllCollections();
+     * initializeDatabase();
+     * DataInitialization.reloadDefaults();
+     * getDBStats();
+     *//*
+    }*/
+    
+    /*@Override
     public void contextDestroyed(ServletContextEvent s)
     {
+        log.info(" -> contextDestroyed");
         stopDB();
-    }
-    
+    }*/
     public static MongoDatabase getDBConnections()
     {
         if (db == null || mongo == null)
@@ -359,7 +375,7 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
     
     public static int createAllCollections()
     {
-        logger.warn("---------------------------- Creating Collections");
+        log.warn("---------------------------- Creating Collections");
         MongoDatabase db = getDBConnections();
 //        MongoIterable<String> colls = dataService.listCollectionNames();
         MongoIterable<String> colls = db.listCollectionNames();
@@ -395,7 +411,7 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
         {
             db.createCollection(DB_ADDRESS);
         }*/
-        logger.warn("---------------------------- Collections Created");
+        log.warn("---------------------------- Collections Created");
         return Iterators.size(db.listCollections().iterator());
     }
     
@@ -405,6 +421,13 @@ public class Connection<T extends PersistingBaseEntity> implements ServletContex
         {
             db.createCollection(collection);
         }
+    }
+    
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException
+    {
+        super.onStartup(servletContext);
+        
     }
     
 }
