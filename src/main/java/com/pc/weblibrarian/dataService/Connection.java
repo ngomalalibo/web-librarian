@@ -65,7 +65,7 @@ public class Connection<T extends PersistingBaseEntity> extends VaadinServletCon
     // @Value("${spring.data.mongodb.uri}")
     // public static final String DBSTR = "mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian";
     // public static final String DBSTR = "mongodb+srv://clusterUser:1234567890@cluster0-c6hig.mongodb.net/weblibrarian?retryWrites=true&maxPoolSize=50&connectTimeoutMS=120000&w=1&wtimeoutMS=240000&socketTimeoutMS=120000&serverSelectionTimeoutMS=120000";
-    public static String DBSTR = System.getenv().get("SPRING_DATA_MONGODB_URI_LOCAL");
+    public static String DBSTR = System.getenv().get("SPRING_DATA_MONGODB_URI");
 //    static final String DBSTR = "mongodb://localhost:27017?retryWrites=true&maxPoolSize=50&connectTimeoutMS=2000&w=1&wtimeoutMS=2500";
 //     static final String DBSTR = "mongodb://localhost:27017/weblibrarian?retryWrites=true&maxPoolSize=50&connectTimeoutMS=20000&w=1&wtimeoutMS=25000&socketTimeoutMS=50000&serverSelectionTimeoutMS=60000";
     
