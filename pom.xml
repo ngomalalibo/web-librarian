@@ -9,7 +9,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <vaadin.productionMode>true</vaadin.productionMode>
+<!--        <vaadin.productionMode>true</vaadin.productionMode>-->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -148,10 +148,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
-                <!--                <exclusion>-->
-                <!--                    <groupId>org.apache.tomcat.embed</groupId>-->
-                <!--                    <artifactId>tomcat-embed-websocket</artifactId>-->
-                <!--                </exclusion>-->
+                                <exclusion>
+                                    <groupId>org.apache.tomcat.embed</groupId>
+                                    <artifactId>tomcat-embed-websocket</artifactId>
+                                </exclusion>
                 <exclusion>
                     <groupId>org.apache.tomcat.embed</groupId>
                     <artifactId>tomcat-embed-jasper</artifactId>
@@ -452,6 +452,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>start-spring-boot</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <jvmArguments>-Dvaadin.productionMode</jvmArguments>
                     <mainClass>com.pc.weblibrarian.Application</mainClass>
@@ -468,8 +477,8 @@
                         <id>frontend</id>
                         <phase>validate</phase>
                         <goals>
-                            <goal>build-frontend</goal>
                             <goal>prepare-frontend</goal>
+                            <goal>build-frontend</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -720,8 +729,8 @@
                                 <id>frontend</id>
                                 <phase>validate</phase>
                                 <goals>
-                                    <goal>build-frontend</goal>
                                     <goal>prepare-frontend</goal>
+                                    <goal>build-frontend</goal>
                                 </goals>
                             </execution>
                         </executions>
