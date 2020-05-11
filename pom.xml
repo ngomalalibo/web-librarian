@@ -9,7 +9,6 @@
     <packaging>war</packaging>
 
     <properties>
-<!--        <vaadin.productionMode>true</vaadin.productionMode>-->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -85,10 +84,7 @@
     <dependencies>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>flow-server-production-mode</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
+            <!-- Replace artifactId with vaadin-core to use only free components -->
             <artifactId>vaadin</artifactId>
             <exclusions>
                 <exclusion>
@@ -148,10 +144,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
-                                <exclusion>
-                                    <groupId>org.apache.tomcat.embed</groupId>
-                                    <artifactId>tomcat-embed-websocket</artifactId>
-                                </exclusion>
+                <!--<exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-websocket</artifactId>
+                </exclusion>-->
                 <exclusion>
                     <groupId>org.apache.tomcat.embed</groupId>
                     <artifactId>tomcat-embed-jasper</artifactId>
@@ -416,12 +412,11 @@
             <scope>compile</scope>
         </dependency>-->
 
-        <dependency>
+        <!--<dependency>
             <groupId>com.heroku</groupId>
             <artifactId>webapp-runner-main</artifactId>
             <version>9.0.30.0</version>
-            <scope>provided</scope>
-        </dependency>
+        </dependency>-->
 
         <!--<dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -447,38 +442,34 @@
 
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
-
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>start-spring-boot</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <!-- Clean build and startup time for Vaadin apps sometimes may exceed
+                     the default Spring Boot's 30sec timeout.  -->
                 <configuration>
-                    <jvmArguments>-Dvaadin.productionMode</jvmArguments>
                     <mainClass>com.pc.weblibrarian.Application</mainClass>
                     <wait>500</wait>
                     <maxAttempts>240</maxAttempts>
                 </configuration>
             </plugin>
+
+            <!--
+                Take care of synchronizing java dependencies and imports in
+                package.json and main.js files.
+                It also creates webpack.config.js if not exists yet.
+            -->
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
                 <executions>
                     <execution>
-                        <id>frontend</id>
-                        <phase>validate</phase>
+                        <id>prepare-frontend-dev</id>
+                        <phase>compile</phase>
                         <goals>
                             <goal>prepare-frontend</goal>
-                            <goal>build-frontend</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -488,15 +479,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
-                <executions>
-                    <execution>
-                        <id>webapp-compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -512,7 +494,7 @@
                 <version>3.2.3</version>
                 <executions>
                     <execution>
-                        <id>webapp-war</id>
+                        <id>webapp-package-war-dev</id>
                         <phase>package</phase>
                         <goals>
                             <goal>war</goal>
@@ -534,10 +516,10 @@
                 <executions>
                     <execution>
                         <id>install-node-and-npm</id>
-                        <phase>clean</phase>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                     </execution>
                 </executions>
                 <configuration>
@@ -558,7 +540,8 @@
                         <web>
                             <!--java $JAVA_OPTS -jar target/dependency/webapp-runner.jar
                             target/web-librarian-project-2.0-SNAPSHOT.war-->
-                            java $JAVA_OPTS -jar target/endorsed/webapp-runner.jar --port $PORT target/*.war
+                            java $JAVA_OPTS -jar target/endorsed/webapp-runner.jar --port $PORT
+                            target/web-librarian-project.war
                         </web>
                     </processTypes>
                 </configuration>
@@ -569,28 +552,9 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.1.2</version>
                 <executions>
-                    <!--<execution>
-                        <id>validate</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>6.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>-->
                     <execution>
-                        <id>copy-webapp-runner</id>
-                        <phase>package</phase>
+                        <id>webapp-runner-copy-dev</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
@@ -606,10 +570,9 @@
                             <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
                         </configuration>
                     </execution>
-
                     <execution>
                         <id>copy-dependencies</id>
-                        <phase>package</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
@@ -660,7 +623,10 @@
                                     <excludes>
                                         <exclude>*.war</exclude>
                                         <exclude>endorsed/*.jar</exclude>
-                                        &lt;!&ndash;                                        <exclude>web-librarian-project/*</exclude>&ndash;&gt;
+                                        <exclude>web-librarian-project/*</exclude>
+                                        <exclude>endorsed/*</exclude>
+                                        <exclude>classes/*</exclude>
+                                        <exclude>frontend/*</exclude>
                                     </excludes>
                                 </fileset>
                                 <fileset>
@@ -678,10 +644,10 @@
     </build>
 
     <profiles>
-        <profile>
-            <!-- Production mode is activated using -Pproduction -->
+        <!--<profile>
+            &lt;!&ndash; Production mode is activated using -Pproduction &ndash;&gt;
             <id>production</id>
-            <!--<properties>
+            <properties>
                 <vaadin.productionMode>true</vaadin.productionMode>
             </properties>
 
@@ -690,7 +656,7 @@
                     <groupId>com.vaadin</groupId>
                     <artifactId>flow-server-production-mode</artifactId>
                 </dependency>
-            </dependencies>-->
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -698,36 +664,15 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <jvmArguments>-Dvaadin.productionMode</jvmArguments>
-                            <mainClass>com.pc.weblibrarian.Application</mainClass>
-                            <wait>500</wait>
-                            <maxAttempts>240</maxAttempts>
                         </configuration>
                     </plugin>
 
-                    <!--
-                        Take care of synchronizing java dependencies and imports in
-                        package.json and main.js files.
-                        It also creates webpack.config.js if not exists yet.
-                    -->
-                    <!--<plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        &lt;!&ndash; Clean build and startup time for Vaadin apps sometimes may exceed
-                             the default Spring Boot's 30sec timeout.  &ndash;&gt;
-                        <configuration>
-                            <mainClass>com.pc.weblibrarian.Application</mainClass>
-                            <wait>500</wait>
-                            <maxAttempts>240</maxAttempts>
-                        </configuration>
-                    </plugin>-->
                     <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>vaadin-maven-plugin</artifactId>
                         <version>${vaadin.version}</version>
                         <executions>
                             <execution>
-                                <id>frontend</id>
-                                <phase>validate</phase>
                                 <goals>
                                     <goal>prepare-frontend</goal>
                                     <goal>build-frontend</goal>
@@ -740,15 +685,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.8.1</version>
-                        <executions>
-                            <execution>
-                                <id>webapp-compile</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>compile</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                         <configuration>
                             <source>1.8</source>
                             <target>1.8</target>
@@ -762,38 +698,8 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
                         <version>3.2.3</version>
-                        <executions>
-                            <execution>
-                                <id>webapp-war</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                         <configuration>
                             <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <webappDirectory>${project.build.directory}/${project.artifactId}</webappDirectory>
-                            <warName>${project.artifactId}</warName>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                        </configuration>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>com.github.eirslett</groupId>
-                        <artifactId>frontend-maven-plugin</artifactId>
-                        <version>1.9.1</version>
-                        <executions>
-                            <execution>
-                                <id>install-node-and-npm</id>
-                                <phase>clean</phase>
-                                <goals>
-                                    <goal>install-node-and-npm</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <nodeVersion>v14.0.0</nodeVersion>
                         </configuration>
                     </plugin>
 
@@ -808,27 +714,45 @@
                             </buildpacks>
                             <processTypes>
                                 <web>
-                                    <!--java $JAVA_OPTS -jar target/dependency/webapp-runner.jar
-                                    target/web-librarian-project-2.0-SNAPSHOT.war-->
-                                    java $JAVA_OPTS -jar target/endorsed/webapp-runner.jar --port $PORT target/*.war
+                                    &lt;!&ndash;java $JAVA_OPTS  -jar target/dependency/webapp-runner.jar
+                                    target/web-librarian-project-2.0-SNAPSHOT.war&ndash;&gt;
+                                    java $JAVA_OPTS -jar target/endorsed/webapp-runner.jar &#45;&#45;port $PORT target/*.war
                                 </web>
                             </processTypes>
                         </configuration>
                     </plugin>
 
+
+
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>1.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>install node and npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <nodeVersion>v14.0.0</nodeVersion>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
-                        <version>3.1.2</version>
+                        <version>3.0.1</version>
                         <executions>
-                            <!--<execution>
-                                <id>validate</id>
+                            <execution>
                                 <phase>validate</phase>
                                 <goals>
                                     <goal>copy</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
+                                    <outputDirectory>${endorsed.dir}</outputDirectory>
                                     <silent>true</silent>
                                     <artifactItems>
                                         <artifactItem>
@@ -839,9 +763,8 @@
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
-                            </execution>-->
+                            </execution>
                             <execution>
-                                <id>copy-webapp-runner</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>copy</goal>
@@ -855,22 +778,19 @@
                                             <destFileName>webapp-runner.jar</destFileName>
                                         </artifactItem>
                                     </artifactItems>
-                                    <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
                                 </configuration>
                             </execution>
-
-                            <execution>
+                            &lt;!&ndash;<execution>
                                 <id>copy-dependencies</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>copy-dependencies</goal>
                                 </goals>
                                 <configuration>
-                                    <includeArtifactIds>webapp-runner</includeArtifactIds>
                                     <includeScope>compile</includeScope>
                                 </configuration>
-                            </execution>
-                            <!--<execution>
+                            </execution>&ndash;&gt;
+                            <execution>
                                 <id>setup-endorsed</id>
                                 <phase>validate</phase>
                                 <goals>
@@ -886,17 +806,15 @@
                                     </artifactItems>
                                     <outputDirectory>${project.build.directory}/endorsed</outputDirectory>
                                 </configuration>
-                            </execution>-->
+                            </execution>
                         </executions>
                     </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-clean-plugin</artifactId>
-
                         <version>3.0.0</version>
                         <executions>
-                            <!--<execution>
+                            <execution>
                                 <id>clean-jar-artifacts</id>
                                 <phase>install</phase>
                                 <goals>
@@ -905,15 +823,13 @@
                                 <configuration>
                                     <excludeDefaultDirectories>true</excludeDefaultDirectories>
                                     <filesets>
-                                        <fileset>
+                                        &lt;!&ndash;<fileset>
                                             <directory>target/dependency/*.jar</directory>
-                                        </fileset>
+                                        </fileset>&ndash;&gt;
                                         <fileset>
                                             <directory>target</directory>
                                             <excludes>
                                                 <exclude>*.war</exclude>
-                                                <exclude>endorsed/*.jar</exclude>
-                                                &lt;!&ndash;                                        <exclude>web-librarian-project/*</exclude>&ndash;&gt;
                                             </excludes>
                                         </fileset>
                                         <fileset>
@@ -924,12 +840,39 @@
                                         </fileset>
                                     </filesets>
                                 </configuration>
-                            </execution>-->
+                            </execution>
                         </executions>
+                    </plugin>
+
+                    &lt;!&ndash;<plugin>
+                        <groupId>com.heroku.sdk</groupId>
+                        <artifactId>heroku-maven-plugin</artifactId>
+                        <version>2.0.13</version>
+                        <configuration>
+                            <appName>weblibrariannoenv</appName>
+                            <processTypes>
+                                <web>java -jar target/web-librarian-project-2.0-SNAPSHOT.war</web>
+                            </processTypes>
+                        </configuration>
+                    </plugin>&ndash;&gt;
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <forkCount>1</forkCount>
+                            <reuseForks>true</reuseForks>
+                            <systemProperties>
+                                <property>
+                                    <name>java.endorsed.dirs</name>
+                                    <value>${project.build.directory}/endorsed</value>
+                                </property>
+                            </systemProperties>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
-        </profile>
+        </profile>-->
 
         <!--<profile>
             <id>integration-tests</id>
