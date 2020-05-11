@@ -7,7 +7,6 @@ import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 // import com.vaadin.flow.spring.annotation.SpringComponent;
@@ -36,8 +35,6 @@ public class StartPage extends VerticalLayout implements BeforeEnterObserver
         featuresUL.add(new ListItem("Manage Library Resources"));
         featuresUL.add(new ListItem("Publish articles, notes and quotes online via the CMS"));
         add(featuresUL);
-        
-        
     }
     
     @Override

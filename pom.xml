@@ -9,6 +9,7 @@
     <packaging>war</packaging>
 
     <properties>
+        <vaadin.productionMode>true</vaadin.productionMode>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -82,6 +83,10 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>flow-server-production-mode</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
@@ -326,10 +331,10 @@
 
 
         <!-- Using vaadin with CDI        -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-cdi</artifactId>
-        </dependency>
+        </dependency>-->
         <!--<dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -470,6 +475,7 @@
                         <phase>compile</phase>
                         <goals>
                             <goal>prepare-frontend</goal>
+                            <goal>build-frontend</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -646,9 +652,9 @@
     <profiles>
         <profile>
             <id>production</id>
-            <properties>
+            <!--<properties>
                 <vaadin.productionMode>true</vaadin.productionMode>
-            </properties>
+            </properties>-->
             <dependencies>
                 <dependency>
                     <groupId>com.vaadin</groupId>
