@@ -148,10 +148,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.tomcat.embed</groupId>-->
-<!--                    <artifactId>tomcat-embed-websocket</artifactId>-->
-<!--                </exclusion>-->
+                <!--                <exclusion>-->
+                <!--                    <groupId>org.apache.tomcat.embed</groupId>-->
+                <!--                    <artifactId>tomcat-embed-websocket</artifactId>-->
+                <!--                </exclusion>-->
                 <exclusion>
                     <groupId>org.apache.tomcat.embed</groupId>
                     <artifactId>tomcat-embed-jasper</artifactId>
@@ -469,8 +469,8 @@
                         <id>frontend</id>
                         <phase>validate</phase>
                         <goals>
-                            <goal>prepare-frontend</goal>
                             <goal>build-frontend</goal>
+                            <goal>prepare-frontend</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -581,7 +581,7 @@
                         </configuration>
                     </execution>-->
                     <execution>
-                        <id>webapp-runner</id>
+                        <id>copy-webapp-runner</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy</goal>
@@ -718,8 +718,8 @@
                                 <id>frontend</id>
                                 <phase>validate</phase>
                                 <goals>
-                                    <goal>prepare-frontend</goal>
                                     <goal>build-frontend</goal>
+                                    <goal>prepare-frontend</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -830,7 +830,7 @@
                                 </configuration>
                             </execution>-->
                             <execution>
-                                <id>webapp-runner</id>
+                                <id>copy-webapp-runner</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>copy</goal>
@@ -882,9 +882,10 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-clean-plugin</artifactId>
+
                         <version>3.0.0</version>
                         <executions>
-                            <execution>
+                            <!--<execution>
                                 <id>clean-jar-artifacts</id>
                                 <phase>install</phase>
                                 <goals>
@@ -901,7 +902,7 @@
                                             <excludes>
                                                 <exclude>*.war</exclude>
                                                 <exclude>endorsed/*.jar</exclude>
-                                                <!--                                        <exclude>web-librarian-project/*</exclude>-->
+                                                &lt;!&ndash;                                        <exclude>web-librarian-project/*</exclude>&ndash;&gt;
                                             </excludes>
                                         </fileset>
                                         <fileset>
@@ -912,7 +913,7 @@
                                         </fileset>
                                     </filesets>
                                 </configuration>
-                            </execution>
+                            </execution>-->
                         </executions>
                     </plugin>
                 </plugins>
