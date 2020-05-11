@@ -638,7 +638,7 @@
                 </executions>
             </plugin>
 
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
@@ -660,7 +660,7 @@
                                     <excludes>
                                         <exclude>*.war</exclude>
                                         <exclude>endorsed/*.jar</exclude>
-                                        <!--                                        <exclude>web-librarian-project/*</exclude>-->
+                                        &lt;!&ndash;                                        <exclude>web-librarian-project/*</exclude>&ndash;&gt;
                                     </excludes>
                                 </fileset>
                                 <fileset>
@@ -673,7 +673,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
