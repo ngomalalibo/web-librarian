@@ -452,9 +452,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!-- Clean build and startup time for Vaadin apps sometimes may exceed
-                     the default Spring Boot's 30sec timeout.  -->
                 <configuration>
+                    <jvmArguments>-Dvaadin.productionMode</jvmArguments>
                     <mainClass>com.pc.weblibrarian.Application</mainClass>
                     <wait>500</wait>
                     <maxAttempts>240</maxAttempts>
@@ -690,6 +689,9 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <jvmArguments>-Dvaadin.productionMode</jvmArguments>
+                            <mainClass>com.pc.weblibrarian.Application</mainClass>
+                            <wait>500</wait>
+                            <maxAttempts>240</maxAttempts>
                         </configuration>
                     </plugin>
 
@@ -698,17 +700,17 @@
                         package.json and main.js files.
                         It also creates webpack.config.js if not exists yet.
                     -->
-                    <plugin>
+                    <!--<plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
-                        <!-- Clean build and startup time for Vaadin apps sometimes may exceed
-                             the default Spring Boot's 30sec timeout.  -->
+                        &lt;!&ndash; Clean build and startup time for Vaadin apps sometimes may exceed
+                             the default Spring Boot's 30sec timeout.  &ndash;&gt;
                         <configuration>
                             <mainClass>com.pc.weblibrarian.Application</mainClass>
                             <wait>500</wait>
                             <maxAttempts>240</maxAttempts>
                         </configuration>
-                    </plugin>
+                    </plugin>-->
                     <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>vaadin-maven-plugin</artifactId>
