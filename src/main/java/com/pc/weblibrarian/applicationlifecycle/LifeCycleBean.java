@@ -30,7 +30,7 @@ public class LifeCycleBean implements InitializingBean, DisposableBean, BeanName
     public void destroy() throws Exception
     {
         log.info("## The Lifecycle bean has been terminated");
-        //Connection.stopDB();
+        Connection.stopDB();
         
     }
     
