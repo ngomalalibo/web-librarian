@@ -255,7 +255,7 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver</artifactId>
-            <version>3.11.0</version>
+            <version>3.11.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.mongodb</groupId>
